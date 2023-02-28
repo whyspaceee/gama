@@ -1,0 +1,195 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+    // Further reading:
+    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    url      = env("DATABASE_URL")
+}
+
+// Necessary for Next auth
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?  //@db.Text
+    access_token      String?  //@db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?  //@db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+    id            String    @id @default(cuid())
+    customerId    String?  @unique
+    merchantId    String? @unique
+    driverId      String? @unique
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
+    customer      Customer? @relation(fields: [customerId], references: [id]) 
+    merchant      Merchant? @relation(fields: [merchantId], references: [id]) 
+    driver        Driver? @relation(fields: [driverId], references: [id]) 
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
+model Merchant {
+    id             String          @id @default(cuid())
+    title          String
+    number         String
+    address        String
+    user           User?
+     establishments Establishment[]
+}
+
+model Customer {
+    id                  String   @id @default(cuid())
+    user                User?     
+    orders              Order[]
+    establishmentReview Review[]
+}
+
+model Driver {
+    id     String  @id @default(cuid())
+    user   User?    
+    orders Order[]
+}
+
+model Establishment {
+    id           String         @id @default(cuid())
+    title        String
+    merchant     Merchant[]
+    orders       Order[]
+    menu         MenuItem[]
+    openingHours OpeningHours[]
+    location     Location?
+    review       Review[]
+}
+
+model Order {
+    id              String        @id @default(cuid())
+    customerId      String
+    driverId        String?
+    establishmentId String
+    // status          Status        @default(STARTED)
+    startTime       DateTime      @default(now())
+    endTime         DateTime?
+    orderPrice      Decimal
+    customer        Customer      @relation(fields: [customerId], references: [id])
+    driver          Driver?       @relation(fields: [driverId], references: [id])
+    establishment   Establishment @relation(fields: [establishmentId], references: [id])
+    orderItems      OrderItem[]
+}
+
+// enum Status {
+//     STARTED
+//     CANCELLED
+//     ORDER_ACCEPTED
+//     ORDER_DECLINED
+//     DRIVER_FOUND
+//     DRIVER_PICKEDUP
+//     DRIVER_ARRIVED
+//     FINISHED
+// }
+
+model MenuItem {
+    id              String        @id @default(cuid())
+    establishmentId String
+    title           String
+    description     String
+    price           Decimal
+    establishment   Establishment @relation(fields: [establishmentId], references: [id])
+    orderItem       OrderItem[]
+        extras      Extras[]
+}
+
+model OpeningHours {
+    id              String        @id @default(cuid())
+    establishmentId String
+    day             String
+    open            DateTime
+    close           DateTime
+    establishment   Establishment @relation(fields: [establishmentId], references: [id])
+}
+
+model Location {
+    id              String        @id @default(cuid())
+    establishmentId String        @unique
+    latitude        Decimal
+    longitude       Decimal
+    establishment   Establishment @relation(fields: [establishmentId], references: [id])
+}
+
+model Review {
+    id              String        @id @default(cuid())
+    establishmentId String
+    customerId      String
+    rating          Int
+    comment         String
+    establishment   Establishment @relation(fields: [establishmentId], references: [id])
+    customer        Customer      @relation(fields: [customerId], references: [id])
+}
+
+model OrderItem {
+    id       String @id @default(cuid())
+    orderId  String
+    itemId   String
+    quantity Int
+    order    Order  @relation(fields: [orderId], references: [id])
+    item     MenuItem  @relation(fields: [itemId], references: [id])
+    orderItemExtras OrderItemExtras[]
+}
+
+model OrderItemExtras {
+    id       String @id @default(cuid())
+    orderItemId  String
+    extrasId String
+    quantity Int
+    orderItem    OrderItem  @relation(fields: [orderItemId], references: [id])
+    extras   Extras  @relation(fields: [extrasId], references: [id])
+}
+
+model Extras {
+    id              String        @id @default(cuid())
+    menuItemId String
+    title           String
+    description     String
+    price           Decimal
+    menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+    orderItemExtras OrderItemExtras[]
+}
+
+
+
