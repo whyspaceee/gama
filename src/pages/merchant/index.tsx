@@ -15,7 +15,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
   if (!session) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/login?callbackUrl=/merchant/register",
         permanent: false,
       },
     };
@@ -43,7 +43,7 @@ export default function Merchant() {
       <div>Merchant</div>
       <button
         onClick={() => {
-          signOut;
+          signOut();
         }}
       >
         Log out

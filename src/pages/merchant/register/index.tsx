@@ -22,7 +22,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
   if (!session) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/login?callbackUrl=/merchant",
         permanent: false,
       },
     };
