@@ -3,8 +3,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function Login() {
-
-  const {callbackUrl} = useRouter().query;
+  const { callbackUrl } = useRouter().query;
 
   return (
     <>
@@ -14,18 +13,13 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-b px-8 py-32 ">
-        <div>
-          <h1 className=" text-4xl font-bold">Gas! Merchant</h1>
-          <h2 className=" "> Become a GaMa merchant now!</h2>
-        </div>
+        <h1 className=" text-4xl font-bold">Login</h1>
         <button
-          className="  h-14 w-full rounded-xl bg-indigo-400 text-lg font-bold text-white"
+          className="  h-14 w-full rounded-xl bg-black text-lg font-bold text-white"
           onClick={() => {
-            signIn('discord',
-              {
-                callbackUrl: callbackUrl ? callbackUrl.toString() : "/",
-              }
-            );
+            signIn("discord", {
+              callbackUrl: callbackUrl ? callbackUrl.toString() : "/",
+            });
           }}
         >
           Log In
