@@ -9,6 +9,7 @@ import Register from "./register";
 import { BsWallet2 } from "react-icons/bs"
 import IconButton from "../../components/merchant/IconButton";
 import { MdRestaurantMenu } from "react-icons/md";
+import {motion} from 'framer-motion'
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -42,7 +43,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
 
 export default function Merchant() {
   return (
-    <main className=" flex flex-col p-8 items-center gap-y-8 py-16">
+    <motion.main initial={{y:50}} animate={{y:0}} className=" flex flex-col p-8 items-center gap-y-8 py-16">
       <div className=" w-full font-semibold">
         <h1 className=" text-4xl">Gas! Madhang</h1>
         <h2 className=" text-lg">Nasi Goreng Padmanaba</h2>
@@ -61,15 +62,15 @@ export default function Merchant() {
       <div className=" w-full">
         <p className="font-medium text-lg w-full text-center mb-4">Customize your store</p>
         <div className=" w-full grid grid-cols-4 justify-center gap-4">
-          <IconButton Icon={MdRestaurantMenu} label='Menu' />
-          <IconButton Icon={MdRestaurantMenu} label='Promos'/>
-          <IconButton Icon={MdRestaurantMenu} label='Staff'/>
-          <IconButton Icon={MdRestaurantMenu} label='Analytics'/>
-          <IconButton Icon={MdRestaurantMenu} label='Branches'/>
+          <IconButton Icon={MdRestaurantMenu} label='Menu' delay={0}/>
+          <IconButton Icon={MdRestaurantMenu} label='Promos' delay={0.2}/>
+          <IconButton Icon={MdRestaurantMenu} label='Staff' delay={0.4}/>
+          <IconButton Icon={MdRestaurantMenu} label='Analytics' delay={0.6}/>
+          <IconButton Icon={MdRestaurantMenu} label='Branches' delay={0.8}/>
 
         </div>
       </div>
       
-    </main>
+    </motion.main>
   );
 }
