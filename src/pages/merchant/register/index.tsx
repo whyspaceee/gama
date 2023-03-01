@@ -1,18 +1,13 @@
 import Head from "next/head";
-import {
-  FieldValues,
-  UseFormRegister,
-} from "react-hook-form";
 import { useEffect, useState } from "react";
 import BasicInformation from "../../../components/merchant/register/BasicInformation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../../server/auth";
+import BusinessOrPersonal from "../../../components/merchant/register/BusinessOrPersonal";
+import BusinessInformation from "../../../components/merchant/register/BusinessInformation";
+import PersonalInformation from "../../../components/merchant/register/PersonalInformation";
 
-export type InputProps = {
-  register: UseFormRegister<FieldValues>;
-  errors: any;
-  name: string;
-};
+
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -45,7 +40,9 @@ export async function getServerSideProps(context: { req: any; res: any }) {
 }
 
 export default function Register() {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    type:''
+  });
   const [activeIndex, setActiveIndex] = useState(0);
 
 
@@ -63,8 +60,10 @@ export default function Register() {
       </Head>
       {
         {
-            0: <BasicInformation setFormData={setFormData} formData={formData} />,
-        }[0]
+            0: <BasicInformation setFormData={setFormData} formData={formData} setActiveIndex={setActiveIndex} />,
+            1: <BusinessOrPersonal setFormData={setFormData} formData={formData} setActiveIndex={setActiveIndex}/>,
+            2: formData.type === "business" ? <BusinessInformation /> : <PersonalInformation />
+        }[activeIndex]
       }
     </>
   );
