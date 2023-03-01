@@ -10,26 +10,26 @@ export const merchantRouter = createTRPCRouter({
         address: z.string(),
         number: z.string(),
         type: z.string(),
-        companyData: z
-          .object({
+        companyData: z.optional(
+          z.object({
             businessIdNumber: z.string(),
             companyEmail: z.string(),
             companyName: z.string(),
             officeAddress: z.string(),
             officeTelephone: z.string(),
           })
-          .optional(),
-        personalData: z
-          .object({
+        ),
+        personalData: z.optional(
+          z.object({
             bankNumber: z.string(),
             nik: z.string(),
             taxId: z.string(),
           })
-          .optional(),
+        ),
       })
     )
     .mutation(({ input, ctx }) => {
-      if (input.type == "business") {
+      if (input.companyData) {
         return ctx.prisma.user.update({
           where: {
             id: ctx.session.user.id,
@@ -43,18 +43,19 @@ export const merchantRouter = createTRPCRouter({
                 type: input.type,
                 companyData: {
                   create: {
-                    businessIdNumber: input.companyData?.businessIdNumber!,
-                    companyEmail: input.companyData?.companyEmail!,
-                    companyName: input.companyData?.companyName!,
-                    officeAddress: input.companyData?.officeAddress!,
-                    officeTelephone: input.companyData?.officeTelephone!,
+                    businessIdNumber: input.companyData.businessIdNumber,
+                    companyEmail: input.companyData.companyEmail,
+                    companyName: input.companyData.companyName,
+                    officeAddress: input.companyData.officeAddress,
+                    officeTelephone: input.companyData.officeTelephone,
                   },
                 },
               },
             },
           },
         });
-      } else {
+      }
+      if (input.personalData) {
         return ctx.prisma.user.update({
           where: {
             id: ctx.session.user.id,
@@ -68,9 +69,9 @@ export const merchantRouter = createTRPCRouter({
                 type: input.type,
                 personalData: {
                   create: {
-                    bankNumber: input.personalData?.bankNumber!,
-                    nik: input.personalData?.nik!,
-                    taxId: input.personalData?.taxId!,
+                    bankNumber: input.personalData.bankNumber,
+                    nik: input.personalData.nik,
+                    taxId: input.personalData.taxId,
                   },
                 },
               },
