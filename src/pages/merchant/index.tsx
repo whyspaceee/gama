@@ -10,10 +10,21 @@ import Register from "./register";
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
+  console.log(session?.user);
+
   if (!session) {
     return {
       redirect: {
         destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  if (!session.user.merchantId) {
+    return {
+      redirect: {
+        destination: "/merchant/register",
         permanent: false,
       },
     };
@@ -27,8 +38,16 @@ export async function getServerSideProps(context: { req: any; res: any }) {
 }
 
 export default function Merchant() {
-    return(
-        <Register/>
-    )
-
+  return (
+    <>
+      <div>Merchant</div>
+      <button
+        onClick={() => {
+          signOut;
+        }}
+      >
+        Log out
+      </button>
+    </>
+  );
 }
