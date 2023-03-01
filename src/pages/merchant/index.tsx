@@ -48,12 +48,12 @@ export default function Merchant() {
         <h1 className=" text-4xl">Gas! Madhang</h1>
         <h2 className=" text-lg">Nasi Goreng Padmanaba</h2>
       </div>
-      <div className=" h-32 w-full bg-black rounded-lg text-white p-4 font-semibold shadow-lg ">
+      <div className=" h-32 w-full bg-gradient-to-r from-[#5DE3D3] to-[#689BCA] text-white p-4 font-semibold shadow-lg rounded-lg ">
         <div className=" flex flex-row items-center gap-x-4">
           <BsWallet2  className=" w-9 h-9" />
           <div>
             <h1>Balance</h1>
-            <p>Rp 100.000.000</p>
+            <p className="text-xl font-bold tracking-widest text-gray-50">Rp 100.000.000</p>
           </div>
         </div>
         <h1 className=" w-full text-right">Today's revenue</h1>
