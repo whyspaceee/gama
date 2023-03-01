@@ -47,7 +47,7 @@ export default function BasicInformation({ setFormData, formData, setActiveIndex
         onSubmit={handleSubmit(onSubmit)}
       >
         <p className=" text-xl font-bold text-center">Please fill in your basic information</p>
-        <InputField register={register} errors={errors} name="title" label='name'/>
+        <InputField register={register} errors={errors} name="title" label='Merchant Name'/>
         <InputField register={register} errors={errors} name="address" label='address'/>
         <InputField register={register} errors={errors} name="number" label='number'/>
 

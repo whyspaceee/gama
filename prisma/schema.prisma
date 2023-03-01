@@ -21,12 +21,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String?  //@db.Text
-    access_token      String?  //@db.Text
+    refresh_token     String? //@db.Text
+    access_token      String? //@db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String?  //@db.Text
+    id_token          String? //@db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -43,18 +43,18 @@ model Session {
 
 model User {
     id            String    @id @default(cuid())
-    customerId    String?  @unique
-    merchantId    String? @unique
-    driverId      String? @unique
+    customerId    String?   @unique
+    merchantId    String?   @unique
+    driverId      String?   @unique
     name          String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    customer      Customer? @relation(fields: [customerId], references: [id]) 
-    merchant      Merchant? @relation(fields: [merchantId], references: [id]) 
-    driver        Driver? @relation(fields: [driverId], references: [id]) 
+    customer      Customer? @relation(fields: [customerId], references: [id])
+    merchant      Merchant? @relation(fields: [merchantId], references: [id])
+    driver        Driver?   @relation(fields: [driverId], references: [id])
 }
 
 model VerificationToken {
@@ -70,20 +70,43 @@ model Merchant {
     title          String
     number         String
     address        String
+    type           String
     user           User?
-     establishments Establishment[]
+    establishments Establishment[]
+    companyData    CompanyData?
+    personalData   PersonalData?
+}
+
+model CompanyData {
+    id               String   @id @default(cuid())
+    merchantId       String   @unique
+    businessIdNumber String
+    companyEmail     String
+    companyName      String
+    officeAddress    String
+    officeTelephone  String
+    merchant         Merchant @relation(fields: [merchantId], references: [id])
+}
+
+model PersonalData {
+    id         String @id @default(cuid())
+    merchantId String @unique
+    nik        String
+    bankNumber String
+    taxId      String
+    merchant   Merchant @relation(fields: [merchantId], references: [id])
 }
 
 model Customer {
     id                  String   @id @default(cuid())
-    user                User?     
+    user                User?
     orders              Order[]
     establishmentReview Review[]
 }
 
 model Driver {
     id     String  @id @default(cuid())
-    user   User?    
+    user   User?
     orders Order[]
 }
 
@@ -132,7 +155,7 @@ model MenuItem {
     price           Decimal
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
     orderItem       OrderItem[]
-        extras      Extras[]
+    extras          Extras[]
 }
 
 model OpeningHours {
@@ -163,33 +186,30 @@ model Review {
 }
 
 model OrderItem {
-    id       String @id @default(cuid())
-    orderId  String
-    itemId   String
-    quantity Int
-    order    Order  @relation(fields: [orderId], references: [id])
-    item     MenuItem  @relation(fields: [itemId], references: [id])
+    id              String            @id @default(cuid())
+    orderId         String
+    itemId          String
+    quantity        Int
+    order           Order             @relation(fields: [orderId], references: [id])
+    item            MenuItem          @relation(fields: [itemId], references: [id])
     orderItemExtras OrderItemExtras[]
 }
 
 model OrderItemExtras {
-    id       String @id @default(cuid())
-    orderItemId  String
-    extrasId String
-    quantity Int
-    orderItem    OrderItem  @relation(fields: [orderItemId], references: [id])
-    extras   Extras  @relation(fields: [extrasId], references: [id])
+    id          String    @id @default(cuid())
+    orderItemId String
+    extrasId    String
+    quantity    Int
+    orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
+    extras      Extras    @relation(fields: [extrasId], references: [id])
 }
 
 model Extras {
-    id              String        @id @default(cuid())
-    menuItemId String
+    id              String            @id @default(cuid())
+    menuItemId      String
     title           String
     description     String
     price           Decimal
-    menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+    menuItem        MenuItem          @relation(fields: [menuItemId], references: [id])
     orderItemExtras OrderItemExtras[]
 }
-
-
-

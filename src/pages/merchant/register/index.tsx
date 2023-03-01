@@ -62,7 +62,7 @@ export default function Register() {
         {
             0: <BasicInformation setFormData={setFormData} formData={formData} setActiveIndex={setActiveIndex} />,
             1: <BusinessOrPersonal setFormData={setFormData} formData={formData} setActiveIndex={setActiveIndex}/>,
-            2: formData.type === "business" ? <BusinessInformation /> : <PersonalInformation />
+            2: formData.type === "business" ? <BusinessInformation setFormData={setFormData} formData={formData} /> : <PersonalInformation  setFormData={setFormData} formData={formData}/>
         }[activeIndex]
       }
     </>
