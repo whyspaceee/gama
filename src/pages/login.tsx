@@ -1,7 +1,11 @@
 import Head from "next/head";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Login() {
+
+  const {callbackUrl} = useRouter().query;
+
   return (
     <>
       <Head>
@@ -17,7 +21,11 @@ export default function Login() {
         <button
           className="  h-14 w-full rounded-xl bg-indigo-400 text-lg font-bold text-white"
           onClick={() => {
-            signIn();
+            signIn('discord',
+              {
+                callbackUrl: callbackUrl ? callbackUrl.toString() : "/",
+              }
+            );
           }}
         >
           Log In
