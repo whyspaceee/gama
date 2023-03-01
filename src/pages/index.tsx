@@ -15,18 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-b px-8 py-32 ">
-        <div className="">
-          <h1 className=" text-4xl font-bold">Gas! Merchant</h1>
-          <h2 className=" "> Become a GaMa merchant now!</h2>
-        </div>
-        <button
-          className="  h-14 w-full text-white rounded-xl bg-indigo-400 text-lg font-bold"
-          onClick={() => {
-            signIn();
-          }}
-        >
-          Log In
-        </button>
+        
       </main>
     </>
   );

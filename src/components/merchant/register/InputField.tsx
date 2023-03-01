@@ -1,13 +1,13 @@
-import { InputProps } from "../../../pages/merchant/register";
+import { InputProps } from "./BasicInformation"
 
-export default function InputField({register, errors , name} : InputProps) {
+export default function InputField({register, errors , name, label} : InputProps) {
     return(
         <div className=" flex w-full flex-col gap-y-2">
             <label
               className=" w-full text-left font-bold capitalize"
               placeholder="Full name"
             >
-              {name}
+              {label}
             </label>
             <input
               {...register(name)}

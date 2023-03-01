@@ -1,10 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { z } from "zod";
-import { api } from "../../../utils/api";
 import InputField from "./InputField";
 
-export default function BasicInformation({ setFormData, formData }: any) {
+export type InputProps = {
+  register: UseFormRegister<FieldValues>;
+  errors: any;
+  name: string;
+  label: string
+};
+
+export default function BasicInformation({ setFormData, formData, setActiveIndex }: any) {
     const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   
@@ -14,7 +20,6 @@ export default function BasicInformation({ setFormData, formData }: any) {
     number: z.string().regex(phoneRegExp, { message: "Invalid phone number" }),
   });
 
-  const {mutate} = api.merchant.register.useMutation()
 
 
   const {
@@ -25,8 +30,9 @@ export default function BasicInformation({ setFormData, formData }: any) {
   } = useForm({ resolver: zodResolver(validationSchema) });
 
   const onSubmit = (data: any) => {
-    mutate(data)
-    console.log(data);
+    setFormData({...formData, ...data})
+    setActiveIndex(1)
+    console.log(formData);
   };
 
   return (
@@ -41,9 +47,9 @@ export default function BasicInformation({ setFormData, formData }: any) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <p className=" text-xl font-bold text-center">Please fill in your basic information</p>
-        <InputField register={register} errors={errors} name="title" />
-        <InputField register={register} errors={errors} name="address" />
-        <InputField register={register} errors={errors} name="number" />
+        <InputField register={register} errors={errors} name="title" label='name'/>
+        <InputField register={register} errors={errors} name="address" label='address'/>
+        <InputField register={register} errors={errors} name="number" label='number'/>
 
       </form>
       <button
