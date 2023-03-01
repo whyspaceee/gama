@@ -2,11 +2,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../server/auth";
 import { BsWallet, BsWallet2, BsWalletFill } from "react-icons/bs";
 import IconButton from "../../components/merchant/IconButton";
-import { MdRestaurantMenu } from "react-icons/md";
+import { MdFeedback, MdOutlineFeedback, MdOutlineSpeaker, MdOutlineSpeakerGroup, MdOutlineSpeakerNotesOff, MdOutlineThumbUpOffAlt, MdRestaurantMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import { CiDiscount1 } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs"
-import { IoAnalyticsOutline, IoFastFoodOutline, IoGitBranch, IoGitBranchOutline } from "react-icons/io5"
+import { IoAnalyticsOutline, IoFastFoodOutline, IoGitBranch, IoGitBranchOutline, IoThumbsUpOutline, IoThumbsUpSharp } from "react-icons/io5"
 import BottomBar from "../../components/BottomBar";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
@@ -60,7 +60,7 @@ export default function Merchant() {
           </div>
         </div>
         <h1 className=" w-full text-right">Today's revenue</h1>
-        <p className=" w-full text-right">Rp 100.000</p>
+        <p className=" w-full text-right">Rp +100.000</p>
       </div>
       <div className=" w-full">
         <p className="mb-4 w-full text-center text-lg font-medium">
@@ -72,6 +72,8 @@ export default function Merchant() {
           <IconButton Icon={BsPeople} label="Staff" delay={0.4} />
           <IconButton Icon={IoAnalyticsOutline} label="Analytics" delay={0.6} />
           <IconButton Icon={IoGitBranchOutline} label="Branches" delay={0.8} />
+          <IconButton Icon={MdOutlineThumbUpOffAlt} label="Feedback" delay={1} />
+          <IconButton Icon={MdOutlineSpeakerGroup} label="Ads" delay={1.2} />
         </div>
       </div>
     </motion.main>
