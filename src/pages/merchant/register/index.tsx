@@ -5,6 +5,8 @@ import {
 } from "react-hook-form";
 import { useEffect, useState } from "react";
 import BasicInformation from "../../../components/merchant/register/BasicInformation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../server/auth";
 
 export type InputProps = {
   register: UseFormRegister<FieldValues>;
@@ -12,9 +14,41 @@ export type InputProps = {
   name: string;
 };
 
+export async function getServerSideProps(context: { req: any; res: any }) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  console.log(session?.user)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  if(session.user.merchantId){
+    return {
+      redirect: {
+        destination: "/merchant",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
+
 export default function Register() {
   const [formData, setFormData] = useState({});
   const [activeIndex, setActiveIndex] = useState(0);
+
+
 
   useEffect(() => {
     console.log(formData)

@@ -11,7 +11,7 @@ export default function InputField({register, errors , name} : InputProps) {
             </label>
             <input
               {...register(name)}
-              className=" h-12 w-full rounded-xl border bg-gray-50 px-2"
+              className=" h-12 w-full rounded-xl border bg-gray-50 px-3"
             />
             {errors[name] && (
               <p className=" text-xs  text-red-500">
