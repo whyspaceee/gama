@@ -53,7 +53,7 @@ export default function BasicInformation({ setFormData, formData, setActiveIndex
 
       </form>
       <button
-          className=" mt-16  h-14 w-full rounded-xl bg-indigo-400 text-lg font-bold text-white"
+          className=" mt-16  h-14 w-full rounded-xl bg-black text-lg font-bold text-white"
           type="submit"
           form="basic-information"
         >
