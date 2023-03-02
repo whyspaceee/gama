@@ -1,6 +1,9 @@
 import Head from "next/head";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { FcGoogle } from "react-icons/fc";
+import { FaDiscord } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Login() {
   const { callbackUrl } = useRouter().query;
@@ -14,16 +17,37 @@ export default function Login() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-b px-8 py-32 ">
         <h1 className=" text-4xl font-bold">Login</h1>
-        <button
-          className="  h-14 w-full rounded-xl bg-black text-lg font-bold text-white"
-          onClick={() => {
-            signIn("discord", {
-              callbackUrl: callbackUrl ? callbackUrl.toString() : "/",
-            });
-          }}
-        >
-          Log In
-        </button>
+        <Image src="/gama-logo.png" width={156} height={156} alt="logo" />
+        <div className=" w-full">
+          <div className="inline-flex w-full items-center justify-center">
+            <hr className="my-8 h-px w-full border bg-gray-200 " />
+            <span className="absolute left-1/2 -translate-x-1/2 bg-white px-3 font-bold text-gray-900  ">
+              Login with
+            </span>
+          </div>
+          <div className=" flex w-full flex-row gap-4 ">
+            <button
+              className="  h-12 w-full rounded-xl border border-black  text-lg font-bold text-white "
+              onClick={() => {
+                signIn("google", {
+                  callbackUrl: callbackUrl ? callbackUrl.toString() : "/",
+                });
+              }}
+            >
+              <FcGoogle className=" mx-auto h-6 w-6" />
+            </button>
+            <button
+              className="  h-12 w-full rounded-xl bg-black text-lg font-bold text-white"
+              onClick={() => {
+                signIn("discord", {
+                  callbackUrl: callbackUrl ? callbackUrl.toString() : "/",
+                });
+              }}
+            >
+              <FaDiscord className=" mx-auto h-6 w-6" />
+            </button>
+          </div>
+        </div>
       </main>
     </>
   );

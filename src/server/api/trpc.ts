@@ -124,3 +124,21 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+/**
+ Merchant middleware
+*/
+  const enforceUserIsMerchant = t.middleware(({ ctx, next }) => {
+    if (!ctx.session || !ctx.session.user.merchantId) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    return next({
+      ctx: {
+        // infers the `session` as non-nullable
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
+  });
+
+  export const merchantProcedure = t.procedure.use(enforceUserIsMerchant);
+  

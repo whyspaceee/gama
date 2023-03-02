@@ -23,7 +23,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
     };
   }
 
-  if(session.user.merchantId){
+  if(session.user.merchantId ){
     return {
       redirect: {
         destination: "/merchant",
@@ -47,9 +47,6 @@ export default function Register() {
 
 
 
-  useEffect(() => {
-    console.log(formData)
-  },[formData])
 
   return (
     <>
@@ -62,7 +59,7 @@ export default function Register() {
         {
             0: <BasicInformation setFormData={setFormData} formData={formData} setActiveIndex={setActiveIndex} />,
             1: <BusinessOrPersonal setFormData={setFormData} formData={formData} setActiveIndex={setActiveIndex}/>,
-            2: formData.type === "business" ? <BusinessInformation setFormData={setFormData} formData={formData} /> : <PersonalInformation  setFormData={setFormData} formData={formData}/>
+            2: formData.type === "business" ? <BusinessInformation setFormData={setFormData} formData={formData} /> : <PersonalInformation setFormData={setFormData} formData={formData}/>
         }[activeIndex]
       }
     </>

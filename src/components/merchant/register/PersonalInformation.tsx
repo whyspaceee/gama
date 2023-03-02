@@ -6,13 +6,26 @@ import { api } from "../../../utils/api";
 import InputField from "./InputField";
 
 export default function PersonalInformation({ setFormData, formData, setActiveIndex }: any) {  
+
+  const finalSchema = z.object({
+    title: z.string(),
+    address: z.string(),
+    number: z.string(),
+    type: z.string(),
+    personalData: z.object({
+      nik: z.string(),
+      bankNumber: z.string(),
+      taxId: z.string(),
+    }),
+  })
+  
   const validationSchema = z.object({
     nik: z.string().min(3, { message: "Must be 3 characters" }).max(32),
     bankNumber: z.string().min(2, { message: "Must be 2 characters" }).max(32),
     taxId: z.string().min(2, { message: "Must be 2 characters" }).max(32),
   });
   
-  const { mutate } = api.merchant.register.useMutation({onSuccess: () => {router.push('/merchant')}});
+  const { mutate } = api.merchant.registerPersonal.useMutation({onSuccess: () => {router.push('/merchant')}});
 
   const {
     register,
@@ -22,10 +35,9 @@ export default function PersonalInformation({ setFormData, formData, setActiveIn
   } = useForm({ resolver: zodResolver(validationSchema) });
 
 
-  const onSubmit = async (data: any) => {
-    setFormData({...formData, personalData: data})
-    console.log(formData);
-    mutate(formData)
+  const onSubmit = (data: any) => {
+    const finalData = {...formData, personalData: data}
+    mutate(finalData)
   };
 
   return (
