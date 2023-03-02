@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../server/auth";
 import { BsWallet, BsWallet2, BsWalletFill } from "react-icons/bs";
 import IconButton from "../../components/merchant/IconButton";
-import { MdFeedback, MdOutlineFeedback, MdOutlineSpeaker, MdOutlineSpeakerGroup, MdOutlineSpeakerNotesOff, MdOutlineThumbUpOffAlt, MdRestaurantMenu } from "react-icons/md";
+import { MdFeedback, MdOutlineFeedback, MdOutlineSpeaker, MdOutlineSpeakerGroup, MdOutlineSpeakerNotesOff, MdOutlineSpeakerPhone, MdOutlineThumbUpOffAlt, MdRestaurantMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import { TbDiscount2 } from "react-icons/tb";
 import { BsPeople } from "react-icons/bs";
@@ -16,6 +16,7 @@ import BottomBar from "../../components/BottomBar";
 import { signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 import Spinner from "../../components/Spinner";
+import { FcAdvertising } from "react-icons/fc";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -109,6 +110,8 @@ export default function Merchant() {
               label="Branches"
               delay={0.8}
             />
+            <IconButton Icon={MdOutlineFeedback} label="Feedback" delay={1} />
+            <IconButton Icon={MdOutlineSpeakerPhone} label="Ads" delay={1.2} />
           </div>
         </div>
        
