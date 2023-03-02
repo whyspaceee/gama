@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../server/auth";
 import { BsWallet, BsWallet2, BsWalletFill } from "react-icons/bs";
 import IconButton from "../../components/merchant/IconButton";
-import { MdRestaurantMenu } from "react-icons/md";
+import { MdFeedback, MdOutlineFeedback, MdOutlineSpeaker, MdOutlineSpeakerGroup, MdOutlineSpeakerNotesOff, MdOutlineThumbUpOffAlt, MdRestaurantMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import { TbDiscount2 } from "react-icons/tb";
 import { BsPeople } from "react-icons/bs";
