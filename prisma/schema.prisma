@@ -71,6 +71,7 @@ model Merchant {
     number         String
     address        String
     type           String
+    isVerified     Boolean         @default(false)
     user           User?
     establishments Establishment[]
     companyData    CompanyData?

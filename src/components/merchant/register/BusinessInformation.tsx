@@ -5,23 +5,38 @@ import { z } from "zod";
 import { api } from "../../../utils/api";
 import InputField from "./InputField";
 
-export default function BusinessInformation({ setFormData, formData, setActiveIndex }: any) {
-    const phoneRegExp =
+export default function BusinessInformation({
+  setFormData,
+  formData,
+  setActiveIndex,
+}: any) {
+
+  const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-  
+
   const validationSchema = z.object({
     companyName: z.string().min(3, { message: "Must be 3 characters" }).max(32),
-    officeAddress: z.string().min(2, { message: "Must be 2 characters" }).max(32),
-    businessIdNumber: z.string().min(2, { message: "Must be 2 characters" }).max(32),
-    companyEmail : z.string().email({ message: "Invalid email" }),
-    officeTelephone: z.string().regex(phoneRegExp, { message: "Invalid phone number" }),
+    officeAddress: z
+      .string()
+      .min(2, { message: "Must be 2 characters" })
+      .max(32),
+    businessIdNumber: z
+      .string()
+      .min(2, { message: "Must be 2 characters" })
+      .max(32),
+    companyEmail: z.string().email({ message: "Invalid email" }),
+    officeTelephone: z
+      .string()
+      .regex(phoneRegExp, { message: "Invalid phone number" }),
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const { mutate } = api.merchant.register.useMutation({onSuccess: () => {router.push('/merchant')}});
-
-
+  const { mutate } = api.merchant.registerBusiness.useMutation({
+    onSuccess: () => {
+      router.push("/merchant");
+    },
+  });
 
   const {
     register,
@@ -31,9 +46,8 @@ export default function BusinessInformation({ setFormData, formData, setActiveIn
   } = useForm({ resolver: zodResolver(validationSchema) });
 
   const onSubmit = (data: any) => {
-    setFormData({...formData, companyData: data})
-    console.log(formData);
-    mutate(formData)
+    const finalData = { ...formData, companyData: data };
+    mutate(finalData);
   };
 
   return (
@@ -44,24 +58,50 @@ export default function BusinessInformation({ setFormData, formData, setActiveIn
       </div>
       <form
         id="business-information"
-        className=" flex w-full flex-col items-center gap-y-4 h-full  "
+        className=" flex h-full w-full flex-col items-center gap-y-4  "
         onSubmit={handleSubmit(onSubmit)}
       >
-        <p className=" text-xl font-bold text-center">Please fill in your business information</p>
-        <InputField register={register} errors={errors} name="companyName" label='Company Name'/>
-        <InputField register={register} errors={errors} name="officeAddress" label='Office Address'/>
-        <InputField register={register} errors={errors} name="businessIdNumber" label='Business Identification Number'/>
-        <InputField register={register} errors={errors} name="companyEmail" label='Company Email'/>
-        <InputField register={register} errors={errors} name="officeTelephone" label='Office Telephone Number'/>
-
+        <p className=" text-center text-xl font-bold">
+          Please fill in your business information
+        </p>
+        <InputField
+          register={register}
+          errors={errors}
+          name="companyName"
+          label="Company Name"
+        />
+        <InputField
+          register={register}
+          errors={errors}
+          name="officeAddress"
+          label="Office Address"
+        />
+        <InputField
+          register={register}
+          errors={errors}
+          name="businessIdNumber"
+          label="Business Identification Number"
+        />
+        <InputField
+          register={register}
+          errors={errors}
+          name="companyEmail"
+          label="Company Email"
+        />
+        <InputField
+          register={register}
+          errors={errors}
+          name="officeTelephone"
+          label="Office Telephone Number"
+        />
       </form>
       <button
-          className=" mt-16  h-14 w-full rounded-xl bg-black text-lg font-bold text-white"
-          type="submit"
-          form="business-information"
-        >
-          Submit
-        </button>
+        className=" mt-16  h-14 w-full rounded-xl bg-black text-lg font-bold text-white"
+        type="submit"
+        form="business-information"
+      >
+        Submit
+      </button>
     </main>
   );
 }

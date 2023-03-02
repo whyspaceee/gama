@@ -29,10 +29,9 @@ export default function BasicInformation({ setFormData, formData, setActiveIndex
     formState: { errors },
   } = useForm({ resolver: zodResolver(validationSchema) });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: any) => { 
     setFormData({...formData, ...data})
     setActiveIndex(1)
-    console.log(formData);
   };
 
   return (

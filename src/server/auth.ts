@@ -6,6 +6,7 @@ import {
   DefaultUser,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env.mjs";
 import { prisma } from "./db";
@@ -25,6 +26,7 @@ declare module "next-auth" {
       merchantId?: String;
       customerId?: String;
       driverId?: String;
+      
 
       // ...other properties
       // role: UserRole;
@@ -36,6 +38,7 @@ declare module "next-auth" {
     merchantId?: String;
     customerId?: String;
     driverId?: String;
+    
   }
 }
 
@@ -63,6 +66,10 @@ export const authOptions: NextAuthOptions = {
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    })
     /**
      * ...add more providers here
      *
