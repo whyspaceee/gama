@@ -10,6 +10,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.282.0",
+    "@aws-sdk/s3-request-presigner": "^3.282.0",
     "@hookform/resolvers": "^2.9.11",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@next/font": "^13.2.3",
@@ -19,6 +21,7 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "everify": "^0.0.8",
     "framer-motion": "^10.0.1",
     "next": "13.1.6",
     "next-auth": "^4.19.0",

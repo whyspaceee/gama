@@ -7,7 +7,7 @@ import { api } from "../utils/api";
 
 import "../styles/globals.css";
 
-const inter = Nunito({subsets: ["latin"]})
+const nunito = Nunito({subsets: ["latin"]})
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -15,7 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className={inter.className + ''}>
+      <main className={nunito.className + ''}>
       <Component {...pageProps} />
       </main>
     </SessionProvider>

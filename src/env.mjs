@@ -23,6 +23,9 @@ const server = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  SPACES_KEY: z.string(),
+  SPACES_SECRET: z.string(),
+  EVERIFY_KEY: z.string(),
   
 });
 
@@ -49,6 +52,9 @@ const processEnv = {
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  SPACES_KEY: process.env.SPACES_KEY,
+  SPACES_SECRET: process.env.SPACES_SECRET,
+  EVERIFY_KEY: process.env.EVERIFY_KEY,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

@@ -80,7 +80,7 @@ export default function ProfilePage() {
           <button onClick={() => {signOut()}} className=" mt-4 flex flex-row gap-4 text-red-500 ">
             <BsBoxArrowLeft className=" h-6 w-6 " /> Log Out
           </button>
-          <div className=" mt-4 mb-16 flex flex-row gap-4 text-red-500">
+          <div className=" mt-4 mb-16    flex flex-row gap-4 text-red-500">
             <BsTrash className=" h-6 w-6 " /> Delete Account
           </div>
         </div>

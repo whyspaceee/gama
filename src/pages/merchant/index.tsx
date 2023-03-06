@@ -17,6 +17,7 @@ import { signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 import Spinner from "../../components/Spinner";
 import { FcAdvertising } from "react-icons/fc";
+import { useEffect } from "react";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -51,10 +52,8 @@ export async function getServerSideProps(context: { req: any; res: any }) {
 export default function Merchant() {
   const { data: session } = useSession();
 
-  const { data, isLoading } = api.merchant.getCurrentMerchant.useQuery(
-    undefined,
-    { enabled: session?.user?.merchantId !== undefined }
-  );
+
+  const { data, isLoading } = api.merchant.getCurrentMerchant.useQuery();
 
   if (isLoading) {
     return (

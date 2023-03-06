@@ -7,17 +7,6 @@ import InputField from "./InputField";
 
 export default function PersonalInformation({ setFormData, formData, setActiveIndex }: any) {  
 
-  const finalSchema = z.object({
-    title: z.string(),
-    address: z.string(),
-    number: z.string(),
-    type: z.string(),
-    personalData: z.object({
-      nik: z.string(),
-      bankNumber: z.string(),
-      taxId: z.string(),
-    }),
-  })
   
   const validationSchema = z.object({
     nik: z.string().min(3, { message: "Must be 3 characters" }).max(32),
