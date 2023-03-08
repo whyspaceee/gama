@@ -11,8 +11,6 @@ export const merchantRouter = createTRPCRouter({
   registerPersonal: personalRegisterProcedure,
 
   getCurrentMerchant: getCurrentMerchantProcedure,
-
-    
 });
 
 

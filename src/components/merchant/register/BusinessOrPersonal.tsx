@@ -14,7 +14,7 @@ export default function BusinessOrPersonal({
       <div className=" w-full flex flex-col gap-4 ">
       <h1>Choose your business type</h1>
       <button
-        className="flex flex-row gap-4 text-xl items-center justify-center w-full rounded-xl border bg-black h-16 text-white active:bg-white active:text-black border-black transition-all no_highlights"
+        className="flex flex-row gap-4 text-xl items-center justify-center w-full rounded-xl border bg-main h-16 text-white active:bg-white active:text-black border-black transition-all no_highlights"
         onClick={() => {
           setFormData({ ...formData, type: "business" });
           setActiveIndex(2);
@@ -23,7 +23,7 @@ export default function BusinessOrPersonal({
         
       <p>Business</p></button>
       <button
-        className=" flex flex-row gap-4 text-xl items-center justify-center w-full rounded-xl border bg-black h-16 text-white active:bg-white active:text-black border-black transition-all no_highlights group-[button1]:"
+        className=" flex flex-row gap-4 text-xl items-center justify-center w-full rounded-xl border bg-main h-16 text-white active:bg-white active:text-black border-black transition-all no_highlights group-[button1]:"
         onClick={() => {
           setFormData({ ...formData, type: "personal" });
           setActiveIndex(2);

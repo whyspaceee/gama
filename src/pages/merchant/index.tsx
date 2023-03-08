@@ -78,7 +78,7 @@ export default function Merchant() {
           <h1 className=" text-4xl font-bold">Gas! Madhang</h1>
           <h2 className=" text-base font-bold">{data.merchant.title}</h2>
         </div>
-        <div className=" h-32 w-full rounded-lg bg-black bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
+        <div className=" h-32 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
           <div className=" flex flex-row items-center gap-x-4">
             <BsWallet2 className=" h-9 w-9 " />
             <div>

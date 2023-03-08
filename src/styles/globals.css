@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-.no_highlights{
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+.no_highlights {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.neumorphic-shadow {
+  filter: drop-shadow(25px 25px 50px #d9d9d9)
+    drop-shadow(-25px -25px 50px #ffffff);
+  border-radius: 36px;
+}
