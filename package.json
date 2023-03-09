@@ -29,6 +29,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.2",
     "react-icons": "^4.7.1",
+    "react-phone-number-input": "^3.2.19",
+    "react18-input-otp": "^1.1.2",
     "superjson": "1.9.1",
     "zod": "^3.20.6"
   },

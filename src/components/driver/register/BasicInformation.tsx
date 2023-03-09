@@ -1,7 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
+import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { z } from "zod";
+import { api } from "../../../utils/api";
 import InputField from "../../merchant/register/InputField";
+import "react-phone-number-input/style.css";
 
 export type InputProps = {
   register: UseFormRegister<FieldValues>;
@@ -14,27 +18,40 @@ export default function DriverBasicInformation({
   setFormData,
   formData,
   setActiveIndex,
+  setPhoneNumber,
+  phoneNumber
+
 }: {
   setFormData: (data: {
     title: string;
     address: string;
     number: string;
   }) => void;
-  formData: {
-    title: string;
-    address: string;
-    number: string;
-  } | undefined;
+  formData:
+    | {
+        title: string;
+        address: string;
+        number: string;
+      }
+    | undefined;
   setActiveIndex: (index: number) => void;
+  setPhoneNumber: (number: string) => void;
+  phoneNumber: string | undefined;
 }) {
+  const { mutate } = api.driver.startVerification.useMutation({
+    onSuccess: () => {
+      setActiveIndex(1);
+    },
+  });
+
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const validationSchema = z.object({
     title: z.string().min(3, { message: "Must be 3 characters" }).max(32),
     address: z.string().min(2, { message: "Must be 2 characters" }).max(32),
-    number: z.string().regex(phoneRegExp, { message: "Invalid phone number"}),
   });
+
 
   const {
     register,
@@ -44,8 +61,10 @@ export default function DriverBasicInformation({
   } = useForm({ resolver: zodResolver(validationSchema) });
 
   const onSubmit = (data: any) => {
+    if(phoneNumber === undefined) return;
+    console.log(phoneNumber)
     setFormData({ ...formData, ...data });
-    setActiveIndex(1);
+    mutate({ phoneNumber: phoneNumber });
   };
 
   return (
@@ -74,12 +93,32 @@ export default function DriverBasicInformation({
           name="address"
           label="address"
         />
-        <InputField
-          register={register}
-          errors={errors}
-          name="number"
-          label="number"
-        />
+        <div className=" flex w-full flex-col gap-y-2">
+          <label className=" w-full text-left font-bold capitalize">
+            Phone Number
+          </label>
+          <PhoneInputWithCountrySelect
+            style={{
+              width: "100%",
+              height: "3rem",
+              border: "1px solid #ccc",
+              padding: "0 10px",
+              fontSize: "16px",
+              boxSizing: "border-box",
+              outline: "none",
+              transition: "border-color 0.3s ease",
+              backgroundColor: "rgb(249 250 251)",
+              borderRadius: "0.75rem",
+              ":focus": {
+                borderColor: "#0074d9",
+              },
+            }}
+            className="h-14 w-full rounded-xl border border-gray-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-main"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e?.toString() || "")}
+            defaultCountry="ID"
+          />
+        </div>
       </form>
       <button
         className=" mt-16  h-14 w-full rounded-xl bg-main text-lg font-bold text-white"

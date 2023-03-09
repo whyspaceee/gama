@@ -2,7 +2,7 @@ import { InputProps } from "./BasicInformation"
 
 export default function InputField({register, errors , name, label} : InputProps) {
     return(
-        <div className=" flex w-full flex-col gap-y-2">
+        <div className=" flex w-full flex-col gap-y-2" >
             <label
               className=" w-full text-left font-bold capitalize"
             >

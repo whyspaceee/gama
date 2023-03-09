@@ -57,6 +57,12 @@ export const authOptions: NextAuthOptions = {
       if (user.merchantId) {
         session.user.merchantId = user.merchantId;
       }
+      if (user.customerId) {
+        session.user.customerId = user.customerId;
+      }
+      if (user.driverId) {
+        session.user.driverId = user.driverId;
+      }
       return session;
     },
   },

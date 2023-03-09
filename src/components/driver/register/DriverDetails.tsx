@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
 import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { z } from "zod";
+import { api } from "../../../utils/api";
 import InputField from "../../merchant/register/InputField";
 
 export type InputProps = {
@@ -10,7 +12,7 @@ export type InputProps = {
   label: string;
 };
 
-export default function DriverBasicInformation({
+export default function DriverDetails({
   setFormData,
   formData,
   setActiveIndex,
@@ -27,9 +29,15 @@ export default function DriverBasicInformation({
   } | undefined;
   setActiveIndex: (index: number) => void;
 }) {
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
+  const router = useRouter();
+
+  const { mutate } = api.driver.driverRegister.useMutation({
+    onSuccess: () => {
+      router.push("/driver");
+    },
+  })
+  
   const validationSchema = z.object({
     nik: z.string().min(3, { message: "Must be 3 characters" }).max(32 , { message: "Must be 32 characters" }),
     sim: z.string().min(2, { message: "Must be 2 characters" }).max(32, { message: "Must be 32 characters" }),
@@ -46,8 +54,7 @@ export default function DriverBasicInformation({
   } = useForm({ resolver: zodResolver(validationSchema) });
 
   const onSubmit = (data: any) => {
-    setFormData({ ...formData, ...data });
-    setActiveIndex(2);
+    mutate({ ...formData, ...data });
   };
 
   return (

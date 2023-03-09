@@ -75,7 +75,7 @@ const Prepare = ({ setActiveIndex }: any) => {
             </div>
           </div>
         </div>
-        <button onClick={() => setActiveIndex(1)} className="mb-16 inline-flex h-14 w-full items-center justify-center rounded-md border bg-red-600 py-3.5 px-28 text-xl font-bold text-white">
+        <button onClick={() => setActiveIndex(3)} className="mb-16 inline-flex h-14 w-full items-center justify-center rounded-md border bg-red-600 py-3.5 px-28 text-xl font-bold text-white">
           Proceed
         </button>
       </main>

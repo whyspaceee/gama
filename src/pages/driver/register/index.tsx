@@ -1,7 +1,9 @@
 import { getServerSession } from "next-auth";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DriverBasicInformation from "../../../components/driver/register/BasicInformation";
+import DriverDetails from "../../../components/driver/register/DriverDetails";
+import OTP from "../../../components/driver/register/OTP";
 import Prepare from "../../../components/driver/register/prepare";
 import BasicInformation from "../../../components/merchant/register/BasicInformation";
 import { authOptions, getServerAuthSession } from "../../../server/auth";
@@ -41,6 +43,11 @@ export default function Register() {
     number: string;
   }>();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [tempNumber, setTempNumber] = useState("");
+
+  useEffect(() => {
+    console.log(formData)
+  },[])
 
   return (
     <>
@@ -53,12 +60,29 @@ export default function Register() {
         {
           0: (
             <DriverBasicInformation
+              phoneNumber={tempNumber}
+              setPhoneNumber={setTempNumber}
               setFormData={setFormData}
               formData={formData}
               setActiveIndex={setActiveIndex}
             />
           ),
-          1: <Prepare setActiveIndex={setActiveIndex} />,
+          1: (
+            <OTP
+              formData={formData}
+              setActiveIndex={setActiveIndex}
+              setFormData={setFormData}
+              number={tempNumber}
+            />
+          ),
+          2: <Prepare setActiveIndex={setActiveIndex} />,
+          3: (
+            <DriverDetails
+              setActiveIndex={setActiveIndex}
+              setFormData={setFormData}
+              formData={formData}
+            />
+          ),
         }[activeIndex]
       }
     </>

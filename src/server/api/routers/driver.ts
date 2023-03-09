@@ -26,13 +26,11 @@ export const driverRouter = createTRPCRouter({
         title: z.string(),
         address: z.string(),
         number: z.string(),
-        type: z.string(),
         nik: z.string(),
         sim: z.string(),
         stnk: z.string(),
         vehicle: z.string(),
         bankNumber: z.string(),
-        isVerified: z.boolean(),
       })
     )
     .mutation(({ input, ctx }) => {
@@ -51,7 +49,6 @@ export const driverRouter = createTRPCRouter({
               stnk: input.stnk,
               vehicle: input.vehicle,
               bankNumber: input.bankNumber,
-              isVerified: input.isVerified,
             },
           },
         },
