@@ -1,6 +1,7 @@
 import { SetStateAction, useEffect, useState } from "react";
 import OtpInput from "react18-input-otp";
 import { api } from "../../../utils/api";
+import Spinner from "../../Spinner";
 
 export default function OTP({
   setFormData,
@@ -24,7 +25,7 @@ export default function OTP({
 
   setActiveIndex: (index: number) => void;
 }) {
-  const { mutate } = api.driver.verifyPhone.useMutation({
+  const { mutate, isLoading } = api.driver.verifyPhone.useMutation({
     onSuccess: (data) => {
       setOtp("");
       if (data.status == "SUCCESS") {
@@ -47,6 +48,12 @@ export default function OTP({
       }
     }
   }, [otp]);
+
+  if(isLoading) {
+    return <div className="w-full flex flex-col justify-center items-center h-screen" >
+        <Spinner />
+    </div>
+  }
 
   return (
     <main className=" flex min-h-screen flex-col justify-between items-center px-8 py-16 ">

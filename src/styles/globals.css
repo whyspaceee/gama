@@ -17,3 +17,7 @@
     drop-shadow(-25px -25px 50px #ffffff);
   border-radius: 36px;
 }
+
+.logo-neumorphic {
+  filter: drop-shadow(25px 25px 50px #BE1A34) drop-shadow(-25px -25px 50px #FF2446);
+}

@@ -12,7 +12,7 @@ import {
   IoGitBranch,
   IoGitBranchOutline,
 } from "react-icons/io5";
-import BottomBar from "../../components/BottomBar";
+import BottomBar from "../../components/merchant/BottomBar";
 import { signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 import Spinner from "../../components/Spinner";

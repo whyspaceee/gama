@@ -6,6 +6,7 @@ import { z } from "zod";
 import { api } from "../../../utils/api";
 import InputField from "../../merchant/register/InputField";
 import "react-phone-number-input/style.css";
+import Spinner from "../../Spinner";
 
 export type InputProps = {
   register: UseFormRegister<FieldValues>;
@@ -38,7 +39,7 @@ export default function DriverBasicInformation({
   setPhoneNumber: (number: string) => void;
   phoneNumber: string | undefined;
 }) {
-  const { mutate } = api.driver.startVerification.useMutation({
+  const { mutate, isLoading } = api.driver.startVerification.useMutation({
     onSuccess: () => {
       setActiveIndex(1);
     },
@@ -66,6 +67,12 @@ export default function DriverBasicInformation({
     setFormData({ ...formData, ...data });
     mutate({ phoneNumber: phoneNumber });
   };
+
+  if(isLoading) {
+    return <div className="w-full flex flex-col justify-center items-center h-screen" >
+        <Spinner />
+    </div>
+  }
 
   return (
     <main className=" flex min-h-screen flex-col items-center justify-between  px-8 py-16 ">

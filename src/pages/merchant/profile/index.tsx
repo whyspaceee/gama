@@ -13,7 +13,7 @@ import {
   BsShop,
   BsTrash,
 } from "react-icons/bs";
-import BottomBar from "../../../components/BottomBar";
+import BottomBar from "../../../components/merchant/BottomBar";
 import { authOptions } from "../../../server/auth";
 
 export default function ProfilePage() {

@@ -24,7 +24,7 @@ export default function Login() {
           </p>
         </div>
         <Image
-          className="mb-15 outline-fill drop-shadow-[0_35px_40px_rgba(0,0,0,0.3)] rounded-3xl"
+          className="logo-neumorphic mb-15 outline-fill rounded-3xl"
           src="/gama-logo2.png"
           width={200}
           height={200}
