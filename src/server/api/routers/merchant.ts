@@ -1,6 +1,5 @@
-import { CreateBucketCommand, ListBucketsCommand, ListObjectsCommand } from "@aws-sdk/client-s3";
 import { businessRegisterProcedure } from "../procedures/merchants/businessRegisterProcedure";
-import getCurrentMerchantProcedure from "../procedures/merchants/isVerifiedProcedure";
+import getCurrentMerchantProcedure from "../procedures/merchants/getCurrentMerchantProcedure";
 import personalRegisterProcedure from "../procedures/merchants/personalRegisterProcedure";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";

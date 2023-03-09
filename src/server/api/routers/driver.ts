@@ -54,4 +54,16 @@ export const driverRouter = createTRPCRouter({
         },
       });
     }),
+  getCurrentDriver: protectedProcedure
+    .query(({ ctx }) => {
+      return ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+        include: {
+          driver: true,
+        },
+      });
+    }
+  ),
 });

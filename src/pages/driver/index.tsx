@@ -6,6 +6,7 @@ import { IoFastFoodOutline, IoAnalyticsOutline, IoGitBranchOutline } from "react
 import { MdOutlineFeedback, MdOutlineSpeakerPhone } from "react-icons/md";
 import { TbDiscount2 } from "react-icons/tb";
 import BottomBar from "../../components/BottomBar";
+import WaitVerification from "../../components/driver/register/verification";
 import IconButton from "../../components/merchant/IconButton";
 import Spinner from "../../components/Spinner";
 import { authOptions } from "../../server/auth";
@@ -43,7 +44,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
   
   export default function Merchant() {  
   
-    const { data, isLoading } = api.merchant.getCurrentMerchant.useQuery();
+    const { data, isLoading } = api.driver.getCurrentDriver.useQuery()
   
     if (isLoading) {
       return (
@@ -53,8 +54,8 @@ export async function getServerSideProps(context: { req: any; res: any }) {
       );
     }
   
-    if (!data?.merchant?.isVerified) {
-      return <div>Not Verified</div>;
+    if (!data?.driver?.isVerified) {
+      return <WaitVerification />;
     }
   
     return (
@@ -66,7 +67,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
         >
           <div className=" w-full font-semibold">
             <h1 className=" text-4xl font-bold">Gas! Madhang</h1>
-            <h2 className=" text-base font-bold">{data.merchant.title}</h2>
+            <h2 className=" text-base font-bold">{data.driver.title}</h2>
           </div>
           <div className=" h-32 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
             <div className=" flex flex-row items-center gap-x-4">

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { IoDocumentLockOutline } from "react-icons/io5";
 import { BsClock, BsClockFill } from "react-icons/bs";
 
-const waitVerification: NextPage = () => {
+const WaitVerification: NextPage = () => {
   return (
     <>
       <Head>
@@ -59,4 +59,4 @@ const waitVerification: NextPage = () => {
   );
 };
 
-export default waitVerification;
+export default WaitVerification;
