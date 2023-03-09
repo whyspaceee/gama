@@ -90,8 +90,8 @@ model CompanyData {
 }
 
 model PersonalData {
-    id         String @id @default(cuid())
-    merchantId String @unique
+    id         String   @id @default(cuid())
+    merchantId String   @unique
     nik        String
     bankNumber String
     taxId      String
@@ -106,9 +106,18 @@ model Customer {
 }
 
 model Driver {
-    id     String  @id @default(cuid())
-    user   User?
-    orders Order[]
+    id         String  @id @default(cuid())
+    title          String
+    number         String
+    address        String
+    nik        String
+    sim        String
+    stnk       String  
+    vehicle    String
+    bankNumber String
+    isVerified Boolean @default(false)
+    user       User?
+    orders     Order[]
 }
 
 model Establishment {

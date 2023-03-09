@@ -13,7 +13,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Image className="-z-10 object-cover" src="/bg_login.png" alt="bg" fill/>
+        <Image className="-z-10 object-cover" quality={100} src="/bg_login.png" alt="bg" fill/>
         <div className="inline-flex w-full justify-center items-center p-12 pt-32">
           <Image
             className="drop-shadow-xl rounded-3xl"

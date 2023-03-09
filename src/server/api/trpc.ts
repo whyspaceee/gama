@@ -147,3 +147,16 @@ export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 
   export const merchantProcedure = t.procedure.use(enforceUserIsMerchant);
   
+const enforceUserIsDriver = t.middleware(({ ctx, next }) => {
+  if (!ctx.session || !ctx.session.user.driverId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+})
+
+export const driverProcedure = t.procedure.use(enforceUserIsDriver);

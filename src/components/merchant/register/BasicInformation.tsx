@@ -10,7 +10,7 @@ export type InputProps = {
   label: string
 };
 
-export default function BasicInformation({ setFormData, formData, setActiveIndex }: any) {
+export default function MerchantBasicInformation({ setFormData, formData, setActiveIndex }: any) {
     const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   
