@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { IoCar } from "react-icons/io5";
 
-export default function DriverBottomBar() {
+export default function CustomerBottomBar() {
   return (
     <nav
       className=" fixed bottom-0 z-10   h-16 w-full bg-main px-2 shadow-xl "
@@ -23,7 +23,7 @@ export default function DriverBottomBar() {
           <BsWallet2 className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
         </div>
 
-        <Link href = '/driver'
+        <Link href = '/customer'
           className=" relative bottom-4 flex h-16 w-16 flex-row items-center justify-center rounded-full bg-white  shadow-xl transition-all active:bg-neutral-300 no_highlights "
           style={{ boxShadow: "0px 0px 18px rgba(0, 0, 0, 0.25)" }}
         >
@@ -34,7 +34,7 @@ export default function DriverBottomBar() {
           <div className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white">
             <BsChat className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
           </div>
-          <Link href='/driver/profile' className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white no_highlights ">
+          <Link href='/customer/profile' className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white no_highlights ">
             <BsPerson className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
           </Link>
         </div>  
