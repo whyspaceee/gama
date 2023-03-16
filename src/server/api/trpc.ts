@@ -43,7 +43,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     session: opts.session,
     prisma,
     s3,
-    everify
+    everify,
   };
 };
 

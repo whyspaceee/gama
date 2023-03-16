@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { SetStateAction, useEffect, useState } from "react";
 import OtpInput from "react18-input-otp";
 import { api } from "../../../utils/api";
@@ -10,27 +11,37 @@ export default function OTP({
   setActiveIndex,
 }: {
   setFormData: (data: {
-    title: string;
-    address: string;
+    name: string;
     number: string;
   }) => void;
   number: string;
   formData:
     | {
-        title: string;
-        address: string;
+        name: string;
         number: string;
       }
     | undefined;
 
   setActiveIndex: (index: number) => void;
 }) {
+
+  const router = useRouter()
+  
+  const register = api.customer.customerRegister.useMutation({
+    onSuccess: (data) => {
+      if (data.customerId) {
+        router.push("/customer");
+      }
+    },
+  }
+  );
+
   const { mutate, isLoading } = api.verification.verifyPhoneNumber.useMutation({
     onSuccess: (data) => {
       setOtp("");
       if (data.status == "SUCCESS") {
         setFormData({ ...formData!, number: number });
-        setActiveIndex(2);
+        register.mutate({ name: formData?.name!, number: number });
       }
     },
   });
@@ -58,8 +69,7 @@ export default function OTP({
   return (
     <main className=" flex min-h-screen flex-col justify-between items-center px-8 py-16 ">
       <div className=" mb-8">
-        <h1 className=" text-4xl font-bold text-red-500">Gas! Driver</h1>
-        <h2 className=" "> Become a GaMa driver now!</h2>
+        <h1 className=" text-4xl font-bold text-red-500">Gas! Madhang</h1>
       </div>
       <div className=" p-6 flex flex-col items-center bg-white shadow-lg rounded-xl">
         <h1 className=" text-center text-xl font-bold">

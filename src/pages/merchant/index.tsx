@@ -18,6 +18,7 @@ import { api } from "../../utils/api";
 import Spinner from "../../components/Spinner";
 import { FcAdvertising } from "react-icons/fc";
 import { useEffect } from "react";
+import MerchantBottomBar from "../../components/merchant/BottomBar";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -115,7 +116,7 @@ export default function Merchant() {
         </div>
        
       </motion.main>
-      <BottomBar />
+      <MerchantBottomBar />
     </>
   );
 }

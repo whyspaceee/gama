@@ -8,14 +8,7 @@ import InputField from "../../merchant/register/InputField";
 import "react-phone-number-input/style.css";
 import Spinner from "../../Spinner";
 
-export type InputProps = {
-  register: UseFormRegister<FieldValues>;
-  errors: any;
-  name: string;
-  label: string;
-};
-
-export default function DriverBasicInformation({
+export default function CustomerBasicInformation({
   setFormData,
   formData,
   setActiveIndex,
@@ -24,14 +17,12 @@ export default function DriverBasicInformation({
 
 }: {
   setFormData: (data: {
-    title: string;
-    address: string;
+    name: string;
     number: string;
   }) => void;
   formData:
     | {
-        title: string;
-        address: string;
+        name: string;
         number: string;
       }
     | undefined;
@@ -40,7 +31,6 @@ export default function DriverBasicInformation({
   phoneNumber: string | undefined;
 }) {
 
-
   const { mutate, isLoading } = api.verification.startVerification.useMutation({
     onSuccess: () => {
       setActiveIndex(1);
@@ -48,9 +38,9 @@ export default function DriverBasicInformation({
   });
 
   const validationSchema = z.object({
-    title: z.string().min(3, { message: "Must be 3 characters" }).max(32),
-    address: z.string().min(2, { message: "Must be 2 characters" }).max(32),
+    name: z.string().min(3, { message: "Must be 3 characters" }).max(32),
   });
+
 
   const {
     register,
@@ -75,8 +65,7 @@ export default function DriverBasicInformation({
   return (
     <main className=" flex min-h-screen flex-col items-center justify-between  px-8 py-16 ">
       <div className=" mb-8">
-        <h1 className=" text-4xl font-bold">Gas! Driver</h1>
-        <h2 className=" "> Become a GaMa driver now!</h2>
+        <h1 className=" text-4xl font-bold">Gas! Madhang</h1>
       </div>
       <form
         id="basic-information"
@@ -89,14 +78,8 @@ export default function DriverBasicInformation({
         <InputField
           register={register}
           errors={errors}
-          name="title"
-          label="Driver Name"
-        />
-        <InputField
-          register={register}
-          errors={errors}
-          name="address"
-          label="address"
+          name="name"
+          label="Name"
         />
         <div className=" flex w-full flex-col gap-y-2">
           <label className=" w-full text-left font-bold capitalize">

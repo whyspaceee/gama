@@ -8,7 +8,7 @@ import {
   BsWallet2,
 } from "react-icons/bs";
 
-export default function BottomBar() {
+export default function MerchantBottomBar() {
   return (
     <nav
       className=" fixed bottom-0 z-10   h-16 w-full bg-main px-2 shadow-xl "

@@ -101,18 +101,21 @@ model PersonalData {
 model Customer {
     id                  String   @id @default(cuid())
     user                User?
+    name                String
+    number              String
+    address             String?
     orders              Order[]
     establishmentReview Review[]
 }
 
 model Driver {
     id         String  @id @default(cuid())
-    title          String
-    number         String
-    address        String
+    title      String
+    number     String
+    address    String
     nik        String
     sim        String
-    stnk       String  
+    stnk       String
     vehicle    String
     bankNumber String
     isVerified Boolean @default(false)
