@@ -25,9 +25,7 @@ const server = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
   SPACES_KEY: z.string(),
   SPACES_SECRET: z.string(),
-  EVERIFY_KEY: z.string(),
-  NEXT_PUBLIC_MAPBOX_TOKEN: z.string(),
-  
+  EVERIFY_KEY: z.string(),  
 });
 
 /**
@@ -36,6 +34,7 @@ const server = z.object({
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 const client = z.object({
+  NEXT_PUBLIC_MAPBOX_TOKEN: z.string(),
   // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
 });
 

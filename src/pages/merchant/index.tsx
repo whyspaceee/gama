@@ -18,11 +18,8 @@ import { api } from "../../utils/api";
 import Spinner from "../../components/Spinner";
 import { FcAdvertising } from "react-icons/fc";
 import { useEffect } from "react";
-<<<<<<< HEAD
 import WaitMerchantVerification from "../../components/merchant/register/WaitMerchantVerification";
-=======
 import MerchantBottomBar from "../../components/merchant/BottomBar";
->>>>>>> 89c6cc326b2ae7fe97c40119d4b543b3aae81ad0
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
