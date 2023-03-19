@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { IoCar } from "react-icons/io5";
 
-export default function MerchantBottomBar() {
+export default function DriverBottomBar() {
   return (
     <nav
       className=" fixed bottom-0 z-10   h-16 w-full bg-main px-2 shadow-xl "

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { protectedProcedure } from "../../trpc";
 
-const personalRegisterProcedure = protectedProcedure
+export const personalRegisterProcedure = protectedProcedure
   .input(
     z.object({
       title: z.string(),

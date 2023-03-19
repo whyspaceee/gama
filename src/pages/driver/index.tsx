@@ -55,7 +55,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
   };
 }
 
-export default function Merchant() {
+export default function Driver() {
   const { data, isLoading } = api.driver.getCurrentDriver.useQuery();
   const [position, setPosition] = useState<GeolocationPosition>()
 
@@ -110,8 +110,8 @@ export default function Merchant() {
             attributionControl={false}
               mapboxAccessToken={''}
               initialViewState={{
-                longitude: position ? position.coords.longitude : 110.376352,
-                latitude: position ? position.coords.latitude : -7.771081,
+                longitude: 110.376352,
+                latitude: -7.771081,
                 zoom: 12,
               }}
               style={{
@@ -119,6 +119,10 @@ export default function Merchant() {
                 width: "100%",
                 height: "192px",
               }}
+              longitude={position && position.coords.longitude}
+              latitude={position && position.coords.latitude}
+
+          
               mapStyle="mapbox://styles/mapbox/streets-v12"
             />
           </div>

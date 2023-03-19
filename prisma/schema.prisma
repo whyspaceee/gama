@@ -98,6 +98,9 @@ model PersonalData {
 model Customer {
     id                  String   @id @default(cuid())
     user                User?
+    name                String
+    number              String
+    address             String?
     orders              Order[]
     establishmentReview Review[]
 }
