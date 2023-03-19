@@ -18,6 +18,7 @@ import { api } from "../../utils/api";
 import Spinner from "../../components/Spinner";
 import { FcAdvertising } from "react-icons/fc";
 import { useEffect } from "react";
+import WaitMerchantVerification from "../../components/merchant/register/WaitMerchantVerification";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -64,7 +65,7 @@ export default function Merchant() {
   }
 
   if (!data?.merchant?.isVerified) {
-    return <div>Not Verified</div>;
+    return <WaitMerchantVerification />
   }
 
   return (
@@ -76,7 +77,7 @@ export default function Merchant() {
       >
         <div className=" w-full font-semibold">
           <h1 className=" text-4xl font-bold">Gas! Madhang</h1>
-          <h2 className=" text-base font-bold">{data.merchant.title}</h2>
+          <h2 className=" text-base font-bold">{data.merchant.establishments?.at(0)?.title}</h2>
         </div>
         <div className=" h-32 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
           <div className=" flex flex-row items-center gap-x-4">
