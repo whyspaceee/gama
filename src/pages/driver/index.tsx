@@ -23,6 +23,7 @@ import Spinner from "../../components/Spinner";
 import { authOptions } from "../../server/auth";
 import { api } from "../../utils/api";
 import DriverBottomBar from "../../components/driver/DriverBottomBar";
+import WaitDriverVerification from "../../components/driver/register/verification";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -73,7 +74,7 @@ export default function Merchant() {
   }
 
   if (!data?.driver?.isVerified) {
-    return <WaitVerification />;
+    return <WaitDriverVerification />;
   }
 
   return (
@@ -107,7 +108,7 @@ export default function Merchant() {
           <div className=" rounded-xl overflow-hidden">
             <Map
             attributionControl={false}
-              mapboxAccessToken={}
+              mapboxAccessToken={''}
               initialViewState={{
                 longitude: position ? position.coords.longitude : 110.376352,
                 latitude: position ? position.coords.latitude : -7.771081,

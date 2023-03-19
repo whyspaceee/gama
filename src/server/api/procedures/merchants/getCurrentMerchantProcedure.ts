@@ -6,7 +6,13 @@ const getCurrentMerchantProcedure = merchantProcedure.query(({ ctx }) => {
         id: ctx.session.user.id,
       },
       select: {
-        merchant: true
+        merchant: {
+          select: {
+            type: true,
+            isVerified: true,
+            establishments: true,
+          },
+        }
       }
     });
   })

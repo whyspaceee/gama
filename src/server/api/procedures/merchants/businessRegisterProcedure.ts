@@ -25,10 +25,14 @@ export const businessRegisterProcedure = protectedProcedure
       data: {
         merchant: {
           create: {
-            title: input.title,
-            address: input.address,
-            number: input.number,
             type: input.type,
+            establishments: {
+              create: {
+                title: input.title,
+                address: input.address,
+                number: input.number,
+              },
+            },
             companyData: {
               create: {
                 businessIdNumber: input.companyData.businessIdNumber,

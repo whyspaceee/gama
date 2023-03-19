@@ -67,9 +67,6 @@ model VerificationToken {
 
 model Merchant {
     id             String          @id @default(cuid())
-    title          String
-    number         String
-    address        String
     type           String
     isVerified     Boolean         @default(false)
     user           User?
@@ -107,12 +104,12 @@ model Customer {
 
 model Driver {
     id         String  @id @default(cuid())
-    title          String
-    number         String
-    address        String
+    title      String
+    number     String
+    address    String
     nik        String
     sim        String
-    stnk       String  
+    stnk       String
     vehicle    String
     bankNumber String
     isVerified Boolean @default(false)
@@ -123,6 +120,8 @@ model Driver {
 model Establishment {
     id           String         @id @default(cuid())
     title        String
+    number         String
+    address        String
     merchant     Merchant[]
     orders       Order[]
     menu         MenuItem[]
