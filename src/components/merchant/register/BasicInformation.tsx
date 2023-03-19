@@ -12,6 +12,7 @@ import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { Map, MapRef } from "react-map-gl";
 import { z } from "zod";
 import { env } from "../../../env.mjs";
+import SelectForwardGeocoder from "../../geocoder/ForwardGeocoder" 
 import InputField from "./InputField";
 
 export type InputProps = {
@@ -79,15 +80,16 @@ export default function MerchantBasicInformation({
         <InputField
           register={register}
           errors={errors}
-          name="address"
-          label="address"
-        />
-        <InputField
-          register={register}
-          errors={errors}
           name="number"
           label="number"
         />
+         <InputField
+          register={register}
+          errors={errors}
+          name="address"
+          label="address"
+        />
+        <SelectForwardGeocoder />
         <div className="mt-4 overflow-hidden rounded-xl w-full relative bg-red">
           <Map
             attributionControl={false}
@@ -104,7 +106,6 @@ export default function MerchantBasicInformation({
             }}
             mapStyle="mapbox://styles/mapbox/streets-v12"
           ></Map>
-
         </div>
       </form>
       <button

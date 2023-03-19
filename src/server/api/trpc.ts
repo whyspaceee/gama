@@ -44,6 +44,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     prisma,
     s3,
     everify,
+    geocoder,
   };
 };
 
@@ -72,6 +73,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { geocoder } from "../geocoder";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

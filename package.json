@@ -35,6 +35,7 @@
     "react-icons": "^4.7.1",
     "react-map-gl": "^7.0.21",
     "react-phone-number-input": "^3.2.19",
+    "react-select": "^5.7.0",
     "react18-input-otp": "^1.1.2",
     "superjson": "1.9.1",
     "swiper": "^9.1.0",
