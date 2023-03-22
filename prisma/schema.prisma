@@ -123,13 +123,12 @@ model Driver {
 model Establishment {
     id           String         @id @default(cuid())
     title        String
-    number         String
-    address        String
+    number       String
     merchant     Merchant[]
     orders       Order[]
     menu         MenuItem[]
     openingHours OpeningHours[]
-    location     Location?
+    address     Address?
     review       Review[]
 }
 
@@ -179,11 +178,15 @@ model OpeningHours {
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
 }
 
-model Location {
+model Address {
     id              String        @id @default(cuid())
     establishmentId String        @unique
-    latitude        Decimal
-    longitude       Decimal
+    label           String
+    type            String
+    place_name      String
+    latitude        Float
+    longitude       Float
+    text            String
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
 }
 

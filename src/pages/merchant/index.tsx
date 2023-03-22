@@ -98,21 +98,27 @@ export default function Merchant() {
             Customize your store
           </p>
           <div className=" grid w-full grid-cols-4 justify-center gap-4">
-            <IconButton Icon={IoFastFoodOutline} label="Menu" delay={0} />
-            <IconButton Icon={TbDiscount2} label="Promos" delay={0.2} />
-            <IconButton Icon={BsPeople} label="Staff" delay={0.4} />
+            <IconButton href='/merchant/menu' Icon={IoFastFoodOutline} label="Menu" delay={0} />
+            <IconButton href='/merchant/promos' Icon={TbDiscount2} label="Promos" delay={0.2} />
+            <IconButton href='/merchant/staff' Icon={BsPeople} label="Staff" delay={0.4} />
             <IconButton
+              href='/merchant/analytics'
               Icon={IoAnalyticsOutline}
               label="Analytics"
               delay={0.6}
             />
             <IconButton
+              href='/merchant/branches'
               Icon={IoGitBranchOutline}
               label="Branches"
               delay={0.8}
             />
-            <IconButton Icon={MdOutlineFeedback} label="Feedback" delay={1} />
-            <IconButton Icon={MdOutlineSpeakerPhone} label="Ads" delay={1.2} />
+            <IconButton
+              href='/merchant/ads'
+             Icon={MdOutlineFeedback} label="Feedback" delay={1} />
+            <IconButton
+              href='/merchant/ads'
+             Icon={MdOutlineSpeakerPhone} label="Ads" delay={1.2} />
           </div>
         </div>
        

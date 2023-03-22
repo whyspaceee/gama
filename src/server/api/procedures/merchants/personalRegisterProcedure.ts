@@ -5,7 +5,13 @@ export const personalRegisterProcedure = protectedProcedure
   .input(
     z.object({
       title: z.string(),
-      address: z.string(),
+      address: z.object({ label: z.string() , value: z.object({
+        id: z.string(),
+        type: z.string(),
+        place_name: z.string(),
+        center: z.array(z.number()),
+        text: z.string(),
+      }) }),
       number: z.string(),
       type: z.string(),
       personalData: z.object({
@@ -27,7 +33,16 @@ export const personalRegisterProcedure = protectedProcedure
             establishments: {
               create: {
                 title: input.title,
-                address: input.address,
+                address: {
+                  create: {
+                    label: input.address.label!,
+                    latitude: input.address.value.center[1]!,
+                    longitude: input.address.value.center[0]!,
+                    place_name: input.address.value.place_name!,
+                    text: input.address.value.text!,
+                    type: input.address.value.type!,
+                  },
+                },
                 number: input.number,
               },
             },

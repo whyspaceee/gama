@@ -38,22 +38,8 @@ export default function MerchantBasicInformation({
       id: z.string(),
       type: z.string(),
       place_name: z.string(),
-      place_type: z.array(z.string()),
       center: z.array(z.number()),
-      geometry: z.object({
-        type: z.string(),
-        coordinates: z.array(z.number()),
-      }),
-      context: z.array(z.object({
-        id: z.string().optional(),
-        text: z.string().optional(),
-        wikidata: z.string().optional(),
-        mapbox_id: z.string().optional(),
-      })).optional(),
-      bbox: z.array(z.number()).optional(),
-      relevance: z.number(),
       text: z.string(),
-
     }) }),
     number: z.string().regex(phoneRegExp, { message: "Invalid phone number" }),
   });
@@ -81,8 +67,8 @@ export default function MerchantBasicInformation({
 
   const onSubmit = (data: any) => {
     console.log(data)
-    //setFormData({ ...formData, ...data });
-    //setActiveIndex(1);
+    setFormData({ ...formData, ...data });
+    setActiveIndex(1);
   };
 
   type Position = {
@@ -163,7 +149,14 @@ export default function MerchantBasicInformation({
           ></Map>
         </div>
         <button
+        onClick={() => {
+          setValue("address", {
+            label: data?.at(0)?.place_name,
+            value: data?.at(0),
+          });
+        }}
          type="button">
+          
           <p className=" text-center text-xl font-bold">
             Use Current Location
           </p>

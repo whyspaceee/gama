@@ -16,10 +16,10 @@ const WaitMerchantVerification: NextPage = () => {
       <main>
         <div className="flex flex-col items-center pt-20">
           <p className="w-80 text-center text-4xl font-bold tracking-widest text-red-600">
-            GAS! Driver
+            GAS! Merchant
           </p>
           <p className="text-s pt-2 font-bold tracking-wider">
-            Become a GAMA Driver now
+            Become a GAMA Merchant now
           </p>
           <p className="pt-8 text-base font-bold tracking-wider text-gray-900 pb-16">
             Data Verification Pending
