@@ -27,7 +27,6 @@ export default function SelectForwardGeocoder({
     <div className=" flex flex-col gap-2 w-full">
       <p className=" font-bold">Address</p>
     <Select
-    
       options={data?.map((e) => {
         return {
           value: e,

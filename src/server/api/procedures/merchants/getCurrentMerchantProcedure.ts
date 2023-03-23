@@ -10,7 +10,20 @@ const getCurrentMerchantProcedure = merchantProcedure.query(({ ctx }) => {
           select: {
             type: true,
             isVerified: true,
-            establishments: true,
+            establishments: {
+              include: {
+                orders:true,
+                address: true,
+                categories: true,
+                review: true,
+                openingHours: true,
+                menu: {
+                  include: {
+                    category: true,
+                  }
+                }
+              }
+            },
           },
         }
       }

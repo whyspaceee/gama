@@ -26,6 +26,7 @@ const server = z.object({
   SPACES_KEY: z.string(),
   SPACES_SECRET: z.string(),
   EVERIFY_KEY: z.string(),  
+  SPACES_BUCKET_NAME: z.string(),
 });
 
 /**
@@ -54,8 +55,10 @@ const processEnv = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   SPACES_KEY: process.env.SPACES_KEY,
   SPACES_SECRET: process.env.SPACES_SECRET,
+  SPACES_BUCKET_NAME: process.env.SPACES_BUCKET_NAME,
   EVERIFY_KEY: process.env.EVERIFY_KEY,
   NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
+  
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

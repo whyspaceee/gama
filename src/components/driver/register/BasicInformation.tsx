@@ -4,7 +4,7 @@ import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { z } from "zod";
 import { api } from "../../../utils/api";
-import InputField from "../../merchant/register/InputField";
+import InputField from "../../InputField";
 import "react-phone-number-input/style.css";
 import Spinner from "../../Spinner";
 

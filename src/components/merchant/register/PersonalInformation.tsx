@@ -3,7 +3,7 @@ import router from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { api } from "../../../utils/api";
-import InputField from "./InputField";
+import InputField from "../../InputField";
 
 export default function PersonalInformation({ setFormData, formData, setActiveIndex }: any) {  
 

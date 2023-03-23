@@ -105,7 +105,7 @@ export default function Customer() {
                 <p className=" font-medium text-white">Your location</p>
               </div>
               <p className=" text-lg font-bold text-white overflow-hidden h-8">
-                {isLoadingLocation ? "Loading..." : location }
+                {isLoadingLocation ? "Loading..." : location?.[0]?.address || ' ' }
               </p>
             </div>
             <div>
@@ -153,7 +153,7 @@ export default function Customer() {
                     />
                     <div className="absolute bottom-0 flex h-12 w-full flex-col justify-center rounded-b-xl bg-main ">
                       <p className=" p-4 text-lg font-bold text-white">
-                        {merchant.title}
+                        {merchant.establishments?.[0]?.title}
                       </p>
                     </div>
                   </SwiperSlide>

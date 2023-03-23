@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { z } from "zod";
 import { api } from "../../../utils/api";
-import InputField from "../../merchant/register/InputField";
+import InputField from "../../InputField";
 
 export type InputProps = {
   register: UseFormRegister<FieldValues>;

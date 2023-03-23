@@ -15,13 +15,15 @@ import { z } from "zod";
 import { env } from "../../../env.mjs";
 import { api } from "../../../utils/api";
 import SelectForwardGeocoder from "../../geocoder/ForwardGeocoder" 
-import InputField from "./InputField";
+import InputField from "../../InputField";
 
 export type InputProps = {
   register: UseFormRegister<FieldValues>;
   errors: any;
   name: string;
   label: string;
+  //make input prop called number that defaults to false
+  number?: boolean;
 };
 
 export default function MerchantBasicInformation({
@@ -173,13 +175,6 @@ export default function MerchantBasicInformation({
         className=" mt-16  h-14 w-full rounded-xl bg-main text-lg font-bold text-white"
         type="submit"
         form="basic-information"
-        onClick={() => {
-          if(data){
-          setValue("address", {
-            label: data[0]?.place_name,
-            value: data[0],
-          })};
-        }}
       >
         Continue
       </button>
