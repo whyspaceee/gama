@@ -1,17 +1,17 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { TbDiscount, TbDiscount2 } from "react-icons/tb";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function FocusedScreen({ data }: { data: any }) {
-    console.log(data[0].menu)
   return (
     <div className=" flex flex-col gap-4">
       <div>
         <h1 className=" mb-4 text-xl font-bold">Matching Restos</h1>
         <div className=" flex flex-col gap-4">
           {data.map((resto: any) => (
-            <div className=" flex flex-col gap-4" key={resto.id}>
+            <Link href={`/customer/establishment?id=${resto.id}`} className=" flex flex-col gap-4" key={resto.id}>
               <div className=" relative flex flex-row items-start gap-4">
                 <div className=" relative h-24 w-24 flex-shrink-0 rounded-xl bg-gray-200">
                   <Image
@@ -65,7 +65,7 @@ export default function FocusedScreen({ data }: { data: any }) {
               )}
               <hr className=" h-px border-0 bg-gray-200" />
               
-            </div>
+            </Link>
             
           ))}
         </div>

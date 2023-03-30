@@ -39,7 +39,7 @@ export default function ViewEstablishment() {
       <div className=" flex flex-col gap-6">
         <div className=" w-full h-64 relative">
             <BsArrowLeft className=" absolute top-4 left-4 text-2xl fill-main z-10 bg-white rounded-full w-10 h-10 p-2" onClick={() => router.push('/customer')}/>
-            <Image alt='thumbnail' fill src="https://source.unsplash.com/random?food" className=" object-cover" />
+            <Image alt='thumbnail' fill src={data.thumbnail} className=" object-cover" />
         </div>
         <div className=" flex flex-col px-6 gap-4"> 
             <h1 className="text-2xl font-bold">

@@ -4,6 +4,7 @@ import { BsSearch } from "react-icons/bs";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import FocusedScreen from "../../../components/customer/search/FocusedScreen";
 import UnfocusedScreen from "../../../components/customer/search/UnfocusedScreen";
+import Spinner from "../../../components/Spinner";
 import useDebounce from "../../../hooks/useDebounce";
 import { api } from "../../../utils/api";
 
@@ -28,7 +29,7 @@ export default function SearchPage() {
     (isFocused);
   }, [isFocused]);
 
-  const { data, isLoading } = api.customer.searchEstablishmentAndMenus.useQuery({
+  const { data, isLoading, } = api.customer.searchEstablishmentAndMenus.useQuery({
     search:  debouncedSearch,
     location: {
         lat: position?.coords.latitude!,
@@ -37,8 +38,10 @@ export default function SearchPage() {
     }, {
         enabled: !!debouncedSearch && !!position
   })
+  
 
   return (
+    
     <main className=" flex min-h-screen flex-col">
       <div className="h-28 w-full bg-main py-6 px-8 font-semibold">
         <div className=" flex h-full flex-col justify-between">

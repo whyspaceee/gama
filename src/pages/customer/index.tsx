@@ -158,7 +158,7 @@ export default function Customer() {
                       <Image
                         fill
                         alt="food"
-                        src="https://source.unsplash.com/random?food"
+                        src={establishment?.thumbnail}
                         className=" rounded-xl object-cover"
                       />
                       <div className="absolute bottom-0 flex h-20 w-full flex-col justify-center py-2 px-4 rounded-b-xl bg-main ">
