@@ -28,7 +28,7 @@ import WaitDriverVerification from "../../components/driver/register/verificatio
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  console.log(session?.user);
+  (session?.user);
 
   if (!session) {
     return {
@@ -128,9 +128,10 @@ export default function Driver() {
           </div>
 
           <div className=" mt-8 flex w-full flex-row flex-wrap justify-center gap-4">
-            <IconButton Icon={MdOutlineHistory} label="History" delay={0} />
-            <IconButton Icon={MdOutlineFeedback} label="Feedback" delay={0.1} />
+            <IconButton href='/driver/history' Icon={MdOutlineHistory} label="History" delay={0} />
+            <IconButton href="/driver/feedback" Icon={MdOutlineFeedback} label="Feedback" delay={0.1} />
             <IconButton
+              href="/driver/analytics"
               Icon={IoAnalyticsOutline}
               label="Analytics"
               delay={0.2}

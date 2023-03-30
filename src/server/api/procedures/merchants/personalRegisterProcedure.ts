@@ -4,6 +4,7 @@ import { protectedProcedure } from "../../trpc";
 export const personalRegisterProcedure = protectedProcedure
   .input(
     z.object({
+      thumbnail: z.string(),
       title: z.string(),
       address: z.object({ label: z.string() , value: z.object({
         id: z.string(),
@@ -32,6 +33,7 @@ export const personalRegisterProcedure = protectedProcedure
             type: input.type,
             establishments: {
               create: {
+                thumbnail: input.thumbnail,
                 title: input.title,
                 address: {
                   create: {

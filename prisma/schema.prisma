@@ -6,7 +6,8 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
+    relationMode = "prisma"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -21,16 +22,17 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? //@db.Text
-    access_token      String? //@db.Text
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? //@db.Text
+    id_token          String? @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -39,6 +41,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
@@ -124,6 +128,7 @@ model Establishment {
     id           String         @id @default(cuid())
     title        String
     number       String
+    thumbnail    String        @db.Text 
     merchant     Merchant[]
     orders       Order[]
     menu         MenuItem[]
@@ -146,6 +151,10 @@ model Order {
     driver          Driver?       @relation(fields: [driverId], references: [id])
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
     orderItems      OrderItem[]
+
+    @@index([driverId])
+    @@index([customerId])
+    @@index([establishmentId])
 }
 
 // enum Status {
@@ -166,13 +175,16 @@ model MenuItem {
     title           String
     description     String
     price           Decimal
-    thumbnail       String
+    thumbnail       String        @db.Text
     stock           Int           @default(0)
     category        Category      @relation(fields: [categoryId], references: [id])
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
     orderItem       OrderItem[]
     extras          Extras[]
     tags            ItemTags[]
+
+    @@index([categoryId])
+    @@index([establishmentId])
 }
 
 model Category {
@@ -181,6 +193,8 @@ model Category {
     title           String
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
     menuItems       MenuItem[]
+
+    @@index([establishmentId])
 }
 
 model ItemTags {
@@ -196,6 +210,8 @@ model OpeningHours {
     open            DateTime
     close           DateTime
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
+
+    @@index([establishmentId])
 }
 
 model Address {
@@ -218,6 +234,9 @@ model Review {
     comment         String
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
     customer        Customer      @relation(fields: [customerId], references: [id])
+
+    @@index([establishmentId])
+    @@index([customerId])
 }
 
 model OrderItem {
@@ -228,6 +247,9 @@ model OrderItem {
     order           Order             @relation(fields: [orderId], references: [id])
     item            MenuItem          @relation(fields: [itemId], references: [id])
     orderItemExtras OrderItemExtras[]
+
+    @@index([orderId])
+    @@index([itemId])
 }
 
 model OrderItemExtras {
@@ -237,6 +259,9 @@ model OrderItemExtras {
     quantity    Int
     orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
     extras      Extras    @relation(fields: [extrasId], references: [id])
+
+    @@index([orderItemId])
+    @@index([extrasId])
 }
 
 model Extras {
@@ -247,4 +272,6 @@ model Extras {
     price           Decimal
     menuItem        MenuItem          @relation(fields: [menuItemId], references: [id])
     orderItemExtras OrderItemExtras[]
+
+    @@index([menuItemId])
 }

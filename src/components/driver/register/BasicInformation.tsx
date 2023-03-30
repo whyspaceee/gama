@@ -61,7 +61,7 @@ export default function DriverBasicInformation({
 
   const onSubmit = (data: any) => {
     if(phoneNumber === undefined) return;
-    console.log(phoneNumber)
+    (phoneNumber)
     setFormData({ ...formData, ...data });
     mutate({ phoneNumber: phoneNumber });
   };

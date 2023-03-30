@@ -115,15 +115,4 @@ export const merchantRouter = createTRPCRouter({
       });
     }),
 
-  getMenuPhotoPresignedUrl: protectedProcedure.mutation(({ ctx }) => {
-    return getSignedUrl(
-      ctx.s3,
-      new PutObjectCommand({
-        Bucket: 'gama',
-        Key: `menu/${crypto.randomUUID()}`,
-        ContentType: "image",
-        Expires: new Date(Date.now() + 1000 * 60 * 5),
-      })
-    );
-  }),
 });

@@ -41,7 +41,7 @@ export default function OTP({
   };
 
   useEffect(() => {
-    console.log(otp);
+    (otp);
     if (otp.length === 6) {
       if (number) {
         mutate({ phoneNumber: number, code: otp });

@@ -20,7 +20,6 @@ import { type Session } from "next-auth";
 
 import { getServerAuthSession } from "../auth";
 import { prisma } from "../db";
-import { s3 } from "../s3";
 import { everify } from "../everify";
 
 
@@ -42,9 +41,10 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
-    s3,
     everify,
     geocoder,
+    matrix,
+    optimization
   };
 };
 
@@ -74,6 +74,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { geocoder } from "../geocoder";
+import { matrix } from "../matrix";
+import { optimization } from "../optimization";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

@@ -93,7 +93,7 @@ export default function ProfilePage() {
 export async function getServerSideProps(context: { req: any; res: any }) {
     const session = await getServerSession(context.req, context.res, authOptions);
   
-    console.log(session?.user);
+    (session?.user);
   
     if (!session) {
       return {

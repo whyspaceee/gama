@@ -45,12 +45,11 @@ export default function AddMenu() {
       }),
       label: z.string(),
     }),
-    tempImage: z.any(),
   });
 
   const onSubmit = (formData: any) => {
 
-    console.log(formData);
+    (formData);
     if (data?.merchant?.establishments?.[0]?.id)
       addMenu.mutate({
         title: formData.title,
@@ -110,17 +109,17 @@ export default function AddMenu() {
         <h1 className="overflow-hidden truncate text-lg font-bold">Add Item</h1>
       </div>
       <div className=" flex flex-col gap-1 p-4  shadow-xl">
-        {watch("tempImage") ? (
+        {/* {watch("tempImage") ? (
           <Image
-            src={URL.createObjectURL(watch("tempImage")[0]  )}
+            src={''}
             alt="thumbnail"
             width={100}
             height={100}
             className=" aspect-square rounded-xl object-cover"
           />
-        ) : (
+        ) : ( */}
           <BsImage className=" h-[100px] w-[100px] p-4 rounded-xl bg-gray-200 fill-gray-500" />
-        )}
+        
 
         <input
           form="add-item"
@@ -213,7 +212,7 @@ export default function AddMenu() {
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  console.log(session?.user);
+  (session?.user);
 
   if (!session) {
     return {

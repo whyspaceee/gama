@@ -16,7 +16,7 @@ export const geocodingRouter = createTRPCRouter({
         .send()
         .then((response) => {
           const match = response.body;
-          console.log(match.features);
+          (match.features);
           return match.features;
         });
     }),
@@ -33,7 +33,7 @@ export const geocodingRouter = createTRPCRouter({
         .send()
         .then((response) => {
           const match = response.body;
-          console.log(match.features);
+          (match.features);
           return match.features;
         });
     }),

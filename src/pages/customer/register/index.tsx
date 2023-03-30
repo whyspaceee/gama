@@ -42,7 +42,7 @@ export default function UserRegister() {
   const [tempNumber, setTempNumber] = useState("");
 
   useEffect(() => {
-    console.log(formData);
+    (formData);
   }, []);
 
   return (

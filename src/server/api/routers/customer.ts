@@ -1,8 +1,12 @@
 import { customerRegisterProcedure } from "../procedures/customer/customerRegisterProcedure";
-import { getAllMerchantsProcedure } from "../procedures/customer/getAllMerchantsProcedure";
+import { getEstablishmentByIdQuery } from "../procedures/customer/getEstablishmentByIdQuery";
+import { getNearestEstablishmentsQuery } from "../procedures/customer/getNearestEstablishmentsQuery";
+import { searchEstablishmentsAndMenusQuery } from "../procedures/customer/searchEstablishmentsAndMenusQuery";
 import { createTRPCRouter } from "../trpc";
 
 export const customerRouter = createTRPCRouter({
     customerRegister : customerRegisterProcedure,
-    getAllMerchants : getAllMerchantsProcedure,
+    getNearestEstablishments : getNearestEstablishmentsQuery,
+    getEstablishmentById: getEstablishmentByIdQuery,
+    searchEstablishmentAndMenus: searchEstablishmentsAndMenusQuery
 })

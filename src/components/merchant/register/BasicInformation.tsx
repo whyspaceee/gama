@@ -68,7 +68,7 @@ export default function MerchantBasicInformation({
 
 
   const onSubmit = (data: any) => {
-    console.log(data)
+    (data)
     setFormData({ ...formData, ...data });
     setActiveIndex(1);
   };
@@ -126,7 +126,7 @@ export default function MerchantBasicInformation({
                   mapRef.current?.setCenter([e.value.center[0]!, e.value.center[1]!]);
                 }
                 field.onChange(e);
-                console.log(e)
+                (e)
               }}
             />
           )}
