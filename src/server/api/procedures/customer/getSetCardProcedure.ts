@@ -66,6 +66,8 @@ export const updateEstablishmentCartMutation = protectedProcedure
         code: "INTERNAL_SERVER_ERROR",
       });
 
+   
+
     return ctx.prisma.cart.upsert({
       where: {
         id: input.cartId,
@@ -91,14 +93,16 @@ export const updateEstablishmentCartMutation = protectedProcedure
               in: input.orderItems.map((orderItem) => orderItem.itemId),
             },
           },
-          create: input.orderItems.map((orderItem) => ({
-            quantity: orderItem.quantity,
-            item: {
-              connect: {
-                id: orderItem.itemId,
+          create: input.orderItems
+            .filter((orderItem) => orderItem.quantity !== 0)
+            .map((orderItem) => ({
+              quantity: orderItem.quantity,
+              item: {
+                connect: {
+                  id: orderItem.itemId,
+                },
               },
-            },
-          })),
+            })),
         },
       },
     });
