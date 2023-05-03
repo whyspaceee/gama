@@ -48,6 +48,15 @@ export default function CartPage() {
 
   useEffect(() => {
     if (cart) {
+      if (cart.orderItems.length === 0) {
+        setDeliveryFee(0);
+        setServiceFee(0);
+      }
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    if (cart) {
       let total = 0;
       cart.orderItems.forEach((item) => {
         total += (item.item.price as unknown as number) * item.quantity;
