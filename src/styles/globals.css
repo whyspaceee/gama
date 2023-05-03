@@ -15,7 +15,6 @@
 .neumorphic-shadow {
   filter: drop-shadow(25px 25px 50px #d9d9d9)
     drop-shadow(-25px -25px 50px #ffffff);
-  border-radius: 36px;
 }
 
 .logo-neumorphic {
