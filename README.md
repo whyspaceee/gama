@@ -63,10 +63,12 @@ Deploy
 
 Project Manager
 - [Joy Alvaro Siahaan]()
+
 Developer
 - [Mohammad Abdan Syakura](https://www.github.com/whyspaceee)
 - [Anas Banta Seutia](https://github.com/Anas-Seutia)
 - [Fada Laudza Adani R](https://github.com/fadalaudzaa)
+
 UI/UX Designer
 - [Muhammad Alfi Ramadhan]()
 - [Reynard Pradhitya]()
