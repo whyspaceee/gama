@@ -1,3 +1,4 @@
+import { MenuItem } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +18,8 @@ import { api } from "../../../utils/api";
 
 export default function ViewEstablishment() {
   const [position, setPosition] = useState<GeolocationPosition>();
+  const [popup, setPopup] = useState<MenuItem | null>(null);
+
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -86,9 +89,9 @@ export default function ViewEstablishment() {
             <p>Offers Available</p>
           </div>
         </div>
-        <CustomerMenuList menu={data.menu} categories={data.categories} />
+        <CustomerMenuList menu={data.menu} categories={data.categories} popup={popup} setPopup={setPopup} />
         <AnimatePresence>
-          {cart?.orderItems.length && (
+          {(cart?.orderItems.length && !popup  ) && (
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}

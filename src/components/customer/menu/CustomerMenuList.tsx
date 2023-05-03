@@ -11,12 +11,14 @@ import CustomerMenuItem from "./CustomerMenuItem";
 export default function CustomerMenuList({
   menu,
   categories,
+  popup,
+  setPopup,
 }: {
   menu: MenuItem[];
   categories: Category[];
+  popup: MenuItem | null;
+  setPopup: (item: MenuItem | null) => void;
 }) {
-  const [popup, setPopup] = useState<MenuItem | null>(null);
-
   const categorizedMenu = categories.map((category) => {
     return {
       category,
