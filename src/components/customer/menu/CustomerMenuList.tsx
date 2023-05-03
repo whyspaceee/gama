@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
+import { api } from "../../../utils/api";
+import Spinner from "../../Spinner";
 import CustomerMenuItem from "./CustomerMenuItem";
 
 export default function CustomerMenuList({
@@ -22,14 +24,33 @@ export default function CustomerMenuList({
     };
   });
 
-  return (
+  const router = useRouter();
+  const { id } = router.query;
+
+  const {data, isLoading, error} = api.customer.getEstablishmentCart.useQuery({
+    establishmentId: id!.toString(),
+  },{
+    enabled: !!id
+  })
+
+  if (isLoading) return <div>
+    <Spinner/>
+  </div>;
+
+  if (error) return <div>
+    <p>error</p>
+  </div>;
+
+  if(data) return (
     <>
       <div className=" flex flex-col gap-4 px-6 pb-16">
         {categorizedMenu.map((item) => (
           <div className=" " key={item.category.id}>
             <p className=" text-xl font-bold">{item.category.title}</p>
             {item.items.map((item) => (
-              <CustomerMenuItem item={item} key={item.id} setPopup={setPopup} />
+              <CustomerMenuItem item={item} key={item.id} setPopup={setPopup} quantity={
+                data.orderItems.find((cartItem) => cartItem.itemId === item.id)?.quantity || 0
+              } cartId={data.id} />
             ))}
           </div>
         ))}
@@ -82,4 +103,6 @@ export default function CustomerMenuList({
       </AnimatePresence>
     </>
   );
+
+  return <div></div>
 }

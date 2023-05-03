@@ -107,6 +107,7 @@ model Customer {
     address             String?
     orders              Order[]
     establishmentReview Review[]
+    carts               Cart[]
 }
 
 model Driver {
@@ -136,6 +137,20 @@ model Establishment {
     address     Address?
     categories   Category[]
     review       Review[]
+    carts        Cart[]
+}
+
+model Cart {
+    id              String        @id @default(cuid())
+    customerId      String
+    establishmentId String
+    customer        Customer      @relation(fields: [customerId], references: [id])
+    establishment   Establishment @relation(fields: [establishmentId], references: [id])
+    orderItems      OrderItem[]
+
+    @@index([customerId])
+    @@index([establishmentId])
+    
 }
 
 model Order {
@@ -150,7 +165,6 @@ model Order {
     customer        Customer      @relation(fields: [customerId], references: [id])
     driver          Driver?       @relation(fields: [driverId], references: [id])
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
-    orderItems      OrderItem[]
 
     @@index([driverId])
     @@index([customerId])
@@ -241,15 +255,15 @@ model Review {
 
 model OrderItem {
     id              String            @id @default(cuid())
-    orderId         String
     itemId          String
     quantity        Int
-    order           Order             @relation(fields: [orderId], references: [id])
+    cartId          String
     item            MenuItem          @relation(fields: [itemId], references: [id])
     orderItemExtras OrderItemExtras[]
+    carts           Cart             @relation(fields: [cartId], references: [id])
 
-    @@index([orderId])
     @@index([itemId])
+    @@index([cartId])
 }
 
 model OrderItemExtras {

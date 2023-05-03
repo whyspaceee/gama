@@ -64,7 +64,7 @@ export default function EditMenu() {
   });
 
   const onSubmit = (data:any) => {
-    (data)
+    console.log(data)
     if(menuItem){
     editMenu.mutate({
       id: menuItem.id,
@@ -206,7 +206,7 @@ export default function EditMenu() {
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  (session?.user);
+  console.log(session?.user);
 
   if (!session) {
     return {

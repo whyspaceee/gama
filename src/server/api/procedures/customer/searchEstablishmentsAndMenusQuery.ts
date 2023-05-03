@@ -40,11 +40,10 @@ export const searchEstablishmentsAndMenusQuery = protectedProcedure
           where: {
             title: {
               contains: input.search,
-            }
-          }
-        },
-      },
+            }        },
+      },}
     });
+
 
     console.log(establishments);
 

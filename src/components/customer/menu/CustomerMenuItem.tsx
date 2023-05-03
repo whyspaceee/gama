@@ -3,22 +3,24 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../../utils/api";
-import { AiOutlineEdit } from "react-icons/ai";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { AiOutlineEdit, AiOutlineMinus } from "react-icons/ai";
+import { BsFileMinus, BsHeart, BsHeartFill, BsNodeMinus, BsPlus } from "react-icons/bs";
+import Spinner from "../../Spinner";
+import { FaMinus, FaPlug, FaPlus } from "react-icons/fa";
 
-export default function CustomerMenuItem({ item , setPopup }: { item: MenuItem, setPopup: (item: MenuItem | null) => void }) {
+export default function CustomerMenuItem({ item , setPopup, quantity, cartId }: { item: MenuItem, setPopup: (item: MenuItem | null) => void , quantity:number, cartId: string}) {
   const utils = api.useContext();
-  const { mutate } = api.merchant.changeStock.useMutation({
-    onSettled: async () => {
-      await utils.merchant.getCurrentMerchant.invalidate();
-    },
-  });
-  const router = useRouter();
-  const [liked, setLiked] = useState(false);
-
+  console.log(cartId)
+  const {mutate } = api.customer.updateEstablishmentCart.useMutation(
+    {
+      onSettled: () => {
+        utils.customer.getEstablishmentCart.invalidate()
+      }
+    }
+  );
   return (
     <>
-      <button onClick={() => {setPopup(item)}} className="mt-4 relative flex h-20 w-full flex-row items-center justify-between pr-6">
+      <div onClick={() => {setPopup(item)}} className="mt-4 relative flex h-20 w-full flex-row items-center justify-between">
         <div className="relative h-20 w-32 flex-shrink-0">
           <Image
             alt="menuImage"
@@ -27,11 +29,11 @@ export default function CustomerMenuItem({ item , setPopup }: { item: MenuItem, 
             className="rounded-xl object-cover"
           />
         </div>
-        <div className="flex max-w-full flex-1 flex-col overflow-hidden p-4 font-bold">
+        <div className="flex max-w-full flex-1 flex-col overflow-hidden pl-4 h-full justify-between font-bold">
           <h1 className="truncate text-ellipsis">{item.title}</h1>
           <div className=" flex flex-row items-center gap-2">
             <h2 className="text-main">{"Rp " + item.price}</h2>
-            {liked ? (
+            {/* {liked ? (
               <BsHeartFill
                 className=" fill-main transition-all"
                 onClick={(e) => {e.stopPropagation(); setLiked(false)}}
@@ -41,10 +43,75 @@ export default function CustomerMenuItem({ item , setPopup }: { item: MenuItem, 
                 className=" fill-main transition-all"
                 onClick={(e) => {e.stopPropagation(); setLiked(true)}}
               />
-            )}
+            )} */}
+          </div>
+          <div className="flex flex-row items-center justify-end">
+          { quantity > 0 ? 
+          <div className="flex flex-row text-xs items-center justify-center gap-2 px-2 py-1 rounded-xl bg-white text-main">
+            <button
+            onClick={(e) => {
+              e.stopPropagation();
+              mutate({
+                orderItems: [{
+                  itemId: item.id,
+                    quantity: quantity -1,
+                }],
+                cartId: cartId,
+                establishmentId: item.establishmentId
+              })
+
+
+            }}
+            className="flex active:bg-white active:text-main active:border active:border-main transition-all flex-row text-xs items-center justify-center gap-2 px-2 py-1 rounded-xl bg-main text-white"
+          >
+            <AiOutlineMinus />
+          </button>
+            <p>{quantity}</p>
+            <button
+            onClick={(e) => {
+              e.stopPropagation();
+              mutate({
+                orderItems: [{
+                  itemId: item.id,
+                    quantity: quantity + 1,
+                }],
+                cartId: cartId,
+                establishmentId: item.establishmentId
+              })
+
+
+            }}
+            className="flex active:bg-white active:text-main active:border active:border-main transition-all flex-row text-xs items-center justify-center gap-2 px-2 py-1 rounded-xl bg-main text-white"
+          >
+            <BsPlus />
+          </button>
+            
+          </div> :
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              mutate({
+                orderItems: [{
+                  itemId: item.id,
+                    quantity: 1,
+                }],
+                cartId: cartId,
+                establishmentId: item.establishmentId
+              })
+
+
+            }}
+            className="flex active:bg-white active:text-main active:border active:border-main transition-all flex-row text-xs items-center justify-center gap-2 px-2 py-1 rounded-xl bg-main text-white"
+          >
+            <BsPlus />
+            <p>Add</p>
+          </button>
+          } 
           </div>
         </div>
-      </button>
+
+
+      </div>
       <hr className=" mt-4 h-px border-0 bg-gray-200" />
     </>
   );
