@@ -162,6 +162,10 @@ export default function CartPage() {
         <div className=" relative w-full  bg-main  rounded-full  py-2 px-4 text-center text-lg font-bold  text-white">
                     Place Order
                   </div>
+        )}
+        {cart?.orderItems.length === 0 && (
+          <div className=" relative w-full  rounded-full bg-gray-400  py-2 px-4 text-center text-lg font-bold  text-white">
+            Your cart is empty
       </div>
                 
     </main>
