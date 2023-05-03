@@ -17,8 +17,8 @@ import { api } from "../../../../utils/api";
 export default function CartPage() {
   const [position, setPosition] = useState<GeolocationPosition>();
   const [totalPrice, setTotalPrice] = useState(0);
-  const [deliveryFee] = useState(4000);
-  const [serviceFee] = useState(3000);
+  const [deliveryFee, setDeliveryFee] = useState(4000);
+  const [serviceFee, setServiceFee] = useState(3000);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setPosition(position);
@@ -67,8 +67,11 @@ export default function CartPage() {
 
   return (
     <main className=" flex w-full flex-col">
-      <div className=" flex h-25 w-full flex-col justify-between bg-main px-6 py-4 text-white">
-        <FaArrowLeft className="h-8" onClick={() => router.push(`/customer/establishment?id=${id}`)} />
+      <div className=" h-25 flex w-full flex-col justify-between bg-main px-6 py-4 text-white">
+        <FaArrowLeft
+          className="h-8"
+          onClick={() => router.push(`/customer/establishment?id=${id}`)}
+        />
         <h1 className=" text-3xl font-medium">{data?.title}</h1>
       </div>
       <div className=" flex flex-row items-center  gap-2 px-6 py-4 ">
@@ -140,34 +143,44 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-      <div className=" flex flex-col gap-2 px-6 py-4 rounded-xl neumorphic-shadow bg-white -z-10 mx-6 my-4">
-        <div className=" flex flex-row items-center justify-between"> 
-          <h1 className=" text-sm font-medium">Subtotal</h1>  
-          <h1 className=" text-sm font-medium">{"Rp. " + totalPrice.toString()}</h1>
+      <div className=" neumorphic-shadow -z-10 mx-6 my-4 flex flex-col gap-2 rounded-xl bg-white px-6 py-4">
+        <div className=" flex flex-row items-center justify-between">
+          <h1 className=" text-sm font-medium">Subtotal</h1>
+          <h1 className=" text-sm font-medium">
+            {"Rp. " + totalPrice.toString()}
+          </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Delivery Fee</h1>
-          <h1 className=" text-sm font-medium">{"Rp. " + deliveryFee.toString()}</h1>
+          <h1 className=" text-sm font-medium">
+            {"Rp. " + deliveryFee.toString()}
+          </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Service Fee</h1>
-          <h1 className=" text-sm font-medium">{"Rp. " + serviceFee.toString()}</h1>
+          <h1 className=" text-sm font-medium">
+            {"Rp. " + serviceFee.toString()}
+          </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Total</h1>
-          <h1 className=" text-sm font-medium">{"Rp. " + (totalPrice+deliveryFee+serviceFee).toString() }</h1>
+          <h1 className=" text-sm font-medium">
+            {"Rp. " + (totalPrice + deliveryFee + serviceFee).toString()}
+          </h1>
         </div>
       </div>
       <div className=" mx-6 my-4">
-        <div className=" relative w-full  bg-main  rounded-full  py-2 px-4 text-center text-lg font-bold  text-white">
-                    Place Order
-                  </div>
+        {cart?.orderItems.length !== 0 && (
+          <div className=" relative w-full  rounded-full  bg-main  py-2 px-4 text-center text-lg font-bold  text-white">
+            Place Order
+          </div>
         )}
         {cart?.orderItems.length === 0 && (
           <div className=" relative w-full  rounded-full bg-gray-400  py-2 px-4 text-center text-lg font-bold  text-white">
             Your cart is empty
+          </div>
+        )}
       </div>
-                
     </main>
   );
 }
