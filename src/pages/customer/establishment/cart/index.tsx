@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -134,7 +135,7 @@ export default function CartPage() {
         <div className="mx-6 mt-4 flex flex-col gap-2 rounded-xl bg-main px-4 py-2 text-xl font-bold text-white">
           <div className=" inline-flex items-center gap-2 py-2">
             <TbDiscount />
-            <div>Vouchers</div>
+            <Link href={`/customer/establishment/promo?id=${id}`}>Vouchers</Link>
           </div>
           <hr className="h-px border bg-white" />
           <div className=" inline-flex items-center gap-2 py-2">
