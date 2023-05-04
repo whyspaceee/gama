@@ -50,7 +50,7 @@ Set up the Prisma database
 ```
 Deploy
 ```bash
-  npm start
+  npm run dev
 ```
 
     
