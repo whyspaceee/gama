@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../../utils/api";
 import { AiOutlineEdit } from "react-icons/ai";
+import formatter from "../../../utils/formatter";
 
 export default function MerchantMenuItem({ item }: { item: MenuItem }) {
   const utils = api.useContext();
@@ -30,7 +31,7 @@ export default function MerchantMenuItem({ item }: { item: MenuItem }) {
           {item.title}
         </p>
         <p className=" text overflow-hidden truncate font-medium">
-          {"Rp " + item.price.toString()}
+          {formatter.format(item.price as unknown as number)}
         </p>
         <div className=" inline-flex w-full items-center justify-between">
           <p className=" text overflow-hidden truncate font-medium">Stock</p>

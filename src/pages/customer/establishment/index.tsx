@@ -48,6 +48,7 @@ export default function ViewEstablishment() {
     }
   );
 
+
   if (isLoading) {
     return <div></div>;
   }

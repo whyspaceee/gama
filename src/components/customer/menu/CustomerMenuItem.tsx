@@ -14,6 +14,7 @@ import {
 import Spinner from "../../Spinner";
 import { FaMinus, FaPlug, FaPlus } from "react-icons/fa";
 import AddSubtractItem from "./AddSubtractItem";
+import formatter from "../../../utils/formatter";
 
 export default function CustomerMenuItem({
   item,
@@ -46,7 +47,8 @@ export default function CustomerMenuItem({
         <div className="flex h-full max-w-full flex-1 flex-col justify-between overflow-hidden pl-4 font-bold">
           <h1 className="truncate text-ellipsis">{item.title}</h1>
           <div className=" flex flex-row items-center gap-2">
-            <h2 className="text-main">{"Rp " + item.price}</h2>
+            
+            <h2 className="text-main">{formatter.format(item.price as unknown as number)}</h2>
             {/* {liked ? (
               <BsHeartFill
                 className=" fill-main transition-all"

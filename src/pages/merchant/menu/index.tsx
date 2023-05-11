@@ -1,3 +1,4 @@
+import { MenuItem } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -12,6 +13,7 @@ import { api } from "../../../utils/api";
 
 export default function MerchantMenu() {
   const [customerView, setCustomerView] = useState(false);
+  const [popup, setPopup] = useState<MenuItem | null>(null);
   const router = useRouter();
   const { data, isLoading, error } = api.merchant.getCurrentMerchant.useQuery();
 
@@ -63,6 +65,8 @@ export default function MerchantMenu() {
       </div>
       {customerView ? (
         <CustomerMenuList
+          popup={popup}
+          setPopup={setPopup}
           menu={data?.merchant?.establishments[0]?.menu || []}
           categories={data?.merchant?.establishments?.[0]?.categories || []}
         />

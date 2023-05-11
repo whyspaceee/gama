@@ -4,6 +4,7 @@ import { getNearestEstablishmentsQuery } from "../procedures/customer/getNearest
 import { getEstablishmentCartQuery, updateEstablishmentCartMutation } from "../procedures/customer/getSetCardProcedure";
 import { searchEstablishmentsAndMenusQuery } from "../procedures/customer/searchEstablishmentsAndMenusQuery";
 import { createTRPCRouter } from "../trpc";
+import { getPromosFromEstablishment, updateCartPromos } from "../procedures/customer/promosQuery";
 
 export const customerRouter = createTRPCRouter({
     customerRegister : customerRegisterProcedure,
@@ -12,4 +13,6 @@ export const customerRouter = createTRPCRouter({
     searchEstablishmentAndMenus: searchEstablishmentsAndMenusQuery,
     getEstablishmentCart: getEstablishmentCartQuery,
     updateEstablishmentCart: updateEstablishmentCartMutation,
+    getPromosFromEstablishment: getPromosFromEstablishment,
+    updateCartPromos: updateCartPromos
 })

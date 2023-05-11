@@ -26,6 +26,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Link from "next/link";
+import formatter from "../../utils/formatter";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -81,6 +82,9 @@ export default function Customer() {
         enabled: !!position
     });
 
+    const {data: wallet} = api.wallet.getWallet.useQuery();
+
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setPosition(position);
@@ -126,14 +130,14 @@ export default function Customer() {
             </Link>
           </div>
         </div>
-        <div className=" mt-28 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
+        <Link href='/wallet' className=" mt-28 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
           <div className=" flex flex-row items-center justify-between gap-x-4">
             <div className=" flex flex-row items-center gap-4">
               <BsWallet2 className=" h-9 w-9 " />
               <div>
                 <h1>Balance</h1>
                 <p className="-mt-1 overflow-hidden text-clip text-lg font-bold ">
-                  Rp 100.000.000
+                  {formatter.format(wallet?.balance || 0)}
                 </p>
               </div>
             </div>
@@ -141,7 +145,7 @@ export default function Customer() {
               <BsPlus className=" h-10 w-10 rounded-xl bg-white fill-main" />
             </div>
           </div>
-        </div>
+        </Link>
         <div className=" flex w-full flex-col gap-2">
           <p className=" w-full text-left text-xl font-bold">Near you</p>
           <div className=" relative h-48 w-full rounded-xl overflow-hidden ">

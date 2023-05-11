@@ -22,11 +22,34 @@ export default function PromoPage() {
     }
   );
 
+  const { data: promos } = api.customer.getPromosFromEstablishment.useQuery(
+    {
+      establishmentId: establishment?.id!,
+    },
+    {
+      enabled: !!establishment,
+    }
+  );
+
+  const { data: cart } = api.customer.getEstablishmentCart.useQuery(
+    {
+      establishmentId: establishment?.id!,
+    },
+    {
+      enabled: !!establishment,
+    }
+  );
+
+  const utils = api.useContext();
+
+  
+
   useEffect(() => {
     if (!establishment) {
       router.back();
     }
   });
+
 
   return (
     <main className=" flex w-full flex-col">
@@ -41,8 +64,18 @@ export default function PromoPage() {
       <p className=" my-4 text-center text-sm">
         Select up to 1 food discount and 1 delivery discount
       </p>
-      <div className=" flex flex-col px-6 gap-4">
-        <PromoItem type="DELIVERY" />
+      <div className=" flex flex-col gap-4 px-6">
+        {promos?.map((promo) => (
+            <PromoItem
+                type="DELIVERY"
+                key={promo.id}
+                promo={promo}
+                inCart={!!cart?.promos.find((p) => p.id === promo.id)}
+                cartId={cart?.id!}
+                establishmentId={establishment?.id!}
+            />
+        ))}
+
       </div>
     </main>
   );

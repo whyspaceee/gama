@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { api } from "../../../utils/api";
+import formatter from "../../../utils/formatter";
 import Spinner from "../../Spinner";
 import CustomerMenuItem from "./CustomerMenuItem";
 
@@ -92,7 +93,7 @@ export default function CustomerMenuList({
                   </p>
                 </div>
                 <h2 className=" mt-4 font-bold text-main ">
-                  {"Rp " + popup.price}
+                  {formatter.format(popup.price as unknown as number)}
                 </h2>
               </div>
               <button className="mt-4 flex flex-row items-center justify-center gap-2 rounded-xl bg-main px-4 py-2 text-white">

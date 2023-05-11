@@ -14,12 +14,15 @@ import {
 import { TbDiscount } from "react-icons/tb";
 import AddSubtractItem from "../../../../components/customer/menu/AddSubtractItem";
 import { api } from "../../../../utils/api";
+import formatter from "../../../../utils/formatter";
 
 export default function CartPage() {
   const [position, setPosition] = useState<GeolocationPosition>();
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryFee, setDeliveryFee] = useState(4000);
   const [serviceFee, setServiceFee] = useState(3000);
+  const [discount, setDiscount] = useState(0);
+  const [deliveryDiscount, setDeliveryDiscount] = useState(0);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setPosition(position);
@@ -47,6 +50,13 @@ export default function CartPage() {
     }
   );
 
+  const {data:location } = api.geocoding.reverseGeocode.useQuery({
+    lat: position?.coords.latitude!,
+    lng: position?.coords.longitude!,
+  }, {
+    enabled: !!position
+  });
+
   useEffect(() => {
     if (cart) {
       if (cart.orderItems.length === 0) {
@@ -65,6 +75,18 @@ export default function CartPage() {
       setTotalPrice(total);
     }
   }, [cart]);
+  
+  useEffect(() => {
+    if (cart?.promos) {
+      const total = cart.promos.reduce((acc, promo) => {
+        return acc + promo.amount;
+      }, 0);
+      const discount = total * totalPrice / 100 
+      setDiscount(discount);
+    }
+  }, [cart, totalPrice]);
+      
+
 
   return (
     <main className=" flex w-full flex-col">
@@ -76,10 +98,10 @@ export default function CartPage() {
         <h1 className=" text-3xl font-medium">{data?.title}</h1>
       </div>
       <div className=" flex flex-row items-center  gap-2 px-6 py-4 ">
-        <FaMapMarkerAlt className="h-7 w-5 fill-main" />
-        <div>
-          <h1 className=" text-lg font-medium">
-            {position?.coords.latitude + ", " + position?.coords.longitude}
+        <FaMapMarkerAlt className="h-7 w-5 fill-main flex-shrink-0" />
+        <div className=" overflow-hidden">
+          <h1 className=" text-lg font-medium truncate">
+            {location?.[0]?.place_name}
           </h1>
         </div>
       </div>
@@ -111,7 +133,7 @@ export default function CartPage() {
                       </h1>
 
                       <h1 className=" text-sm font-medium">
-                        {"Rp. " + item.item.price.toString()}
+                       {formatter.format(item.item.price as unknown as number)}
                       </h1>
                       <AddSubtractItem
                         quantity={item.quantity}
@@ -135,40 +157,50 @@ export default function CartPage() {
         <div className="mx-6 mt-4 flex flex-col gap-2 rounded-xl bg-main px-4 py-2 text-xl font-bold text-white">
           <div className=" inline-flex items-center gap-2 py-2">
             <TbDiscount />
-            <Link href={`/customer/establishment/promo?id=${id}`}>Vouchers</Link>
+            <Link href={`/customer/establishment/promo?id=${id}`}>{
+              cart?.promos.length ? `${cart?.promos.length} Promos Used` : 'Promos'
+            }</Link>
           </div>
           <hr className="h-px border bg-white" />
-          <div className=" inline-flex items-center gap-2 py-2">
+          <Link href={`/customer/establishment/cart/payment?id=${id}`} className=" inline-flex items-center gap-2 py-2">
             <FaWallet />
             <div>Payment</div>
-          </div>
+          </Link>
         </div>
       </div>
       <div className=" neumorphic-shadow -z-10 mx-6 my-4 flex flex-col gap-2 rounded-xl bg-white px-6 py-4">
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Subtotal</h1>
           <h1 className=" text-sm font-medium">
-            {"Rp. " + totalPrice.toString()}
+            {formatter.format(totalPrice)}
           </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Delivery Fee</h1>
           <h1 className=" text-sm font-medium">
-            {"Rp. " + deliveryFee.toString()}
+          {formatter.format(deliveryFee)}
           </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Service Fee</h1>
           <h1 className=" text-sm font-medium">
-            {"Rp. " + serviceFee.toString()}
+          {formatter.format(serviceFee)}
+          </h1>
+        </div>
+        <div className=" flex flex-row items-center justify-between">
+          <h1 className=" text-sm font-medium">Discount</h1>
+          <h1 className=" text-sm font-medium">
+          {formatter.format(discount)}
+
           </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Total</h1>
           <h1 className=" text-sm font-medium">
-            {"Rp. " + (totalPrice + deliveryFee + serviceFee).toString()}
+          {formatter.format(totalPrice + deliveryFee + serviceFee - discount)}
           </h1>
         </div>
+
       </div>
       <div className=" mx-6 my-4">
         {cart?.orderItems.length !== 0 && (

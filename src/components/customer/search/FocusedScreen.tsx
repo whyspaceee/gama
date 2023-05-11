@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { TbDiscount, TbDiscount2 } from "react-icons/tb";
 import { Swiper, SwiperSlide } from "swiper/react";
+import formatter from "../../../utils/formatter";
 
 export default function FocusedScreen({ data }: { data: any }) {
   return (
@@ -55,7 +56,7 @@ export default function FocusedScreen({ data }: { data: any }) {
                       <div className="relative flex flex-col h-full w-full gap-1 overflow-hidden">
                         <h1 className="font-semibold leading-none h-8 overflow-hidden text-ellipsis">{item.title}</h1>
                         <h2 className="truncate text-ellipsis text-sm font-semibold text-gray-500">
-                          Rp {item.price}
+                          {formatter.format(item.price as unknown as number)}
                         </h2>
                       </div>
                     </div>

@@ -5,6 +5,7 @@ import { driverRouter } from "./routers/driver";
 import { customerRouter } from "./routers/customer";
 import { verificationRouter } from "./routers/verification";
 import {  geocodingRouter } from "./routers/geocoding";
+import { walletRouter } from "./routers/wallet";
 
 /**
  * This is the primary router for your server.
@@ -17,7 +18,8 @@ export const appRouter = createTRPCRouter({
   driver: driverRouter,
   customer: customerRouter,  
   verification: verificationRouter,
-  geocoding: geocodingRouter
+  geocoding: geocodingRouter,
+  wallet: walletRouter,
 });
 
 // export type definition of API

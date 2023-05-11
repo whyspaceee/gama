@@ -25,6 +25,7 @@ export const getEstablishmentCartQuery = protectedProcedure
             item: true,
           },
         },
+        promos: true
       },
     });
     if (cart) {
@@ -41,6 +42,7 @@ export const getEstablishmentCartQuery = protectedProcedure
               item: true,
             },
           },
+          promos: true
         },
       });
     }
