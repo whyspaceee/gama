@@ -1,5 +1,9 @@
 import Link from "next/link";
 import {
+  BsBasket,
+  BsBasket2,
+  BsBasket3,
+  BsBorder,
   BsChat,
   BsHouseDoor,
   BsPerson,
@@ -32,7 +36,9 @@ export default function DriverBottomBar() {
 
         <div className=" flex w-1/3 flex-row items-center justify-between">
           <div className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white">
-            <BsChat className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
+            <Link href='/driver/orders' className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white no_highlights "> 
+              <BsBasket3 className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
+            </Link>
           </div>
           <Link href='/driver/profile' className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white no_highlights ">
             <BsPerson className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
