@@ -18,6 +18,9 @@ export const getEstablishmentCartQuery = protectedProcedure
       where: {
         customerId: ctx.session.user.customerId!.toString(),
         establishmentId: input.establishmentId,
+        order: {
+          is: null,
+        }
       },
       include: {
         orderItems: {

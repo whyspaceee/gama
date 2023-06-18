@@ -65,7 +65,7 @@ model User {
 model Wallet {
     id            String        @id @default(cuid())
     userId        String        @unique
-    balance       Int           @default(0)
+    balance       Int           @default(0) @db.UnsignedInt
     transactionsFrom Transaction[] @relation("from")
     transactionsTo Transaction[] @relation("to")
     orders        Order[]
@@ -167,10 +167,11 @@ model Establishment {
 
 model Cart {
     id              String        @id @default(cuid())
-    customerId      String
+    customerId      String       
     establishmentId String
     customer        Customer      @relation(fields: [customerId], references: [id])
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
+    order           Order?
     orderItems      OrderItem[]
     promos          Promo[]
 
@@ -199,14 +200,19 @@ enum PaymentType {
 model Order {
     id              String        @id @default(cuid())
     customerId      String
+    deliveryAddress String
+    deliveryLat     Float       @db.Double
+    deliveryLng     Float       @db.Double
     driverId        String?
+    cartId          String       @unique
     establishmentId String
     walletId        String?
     paymentType     PaymentType
-    // status          Status        @default(STARTED)
+    status          Status        @default(STARTED)
     startTime       DateTime      @default(now())
     endTime         DateTime?
     orderPrice      Decimal
+    cart            Cart?          @relation(fields: [cartId], references: [id])   
     customer        Customer      @relation(fields: [customerId], references: [id])
     driver          Driver?       @relation(fields: [driverId], references: [id])
     establishment   Establishment @relation(fields: [establishmentId], references: [id])
@@ -219,16 +225,16 @@ model Order {
     @@index([establishmentId])
 }
 
-// enum Status {
-//     STARTED
-//     CANCELLED
-//     ORDER_ACCEPTED
-//     ORDER_DECLINED
-//     DRIVER_FOUND
-//     DRIVER_PICKEDUP
-//     DRIVER_ARRIVED
-//     FINISHED
-// }
+enum Status {
+    STARTED
+    CANCELLED
+    ORDER_ACCEPTED
+    ORDER_DECLINED
+    DRIVER_FOUND
+    DRIVER_PICKEDUP
+    DRIVER_ARRIVED
+    FINISHED
+}
 
 model MenuItem {
     id              String        @id @default(cuid())

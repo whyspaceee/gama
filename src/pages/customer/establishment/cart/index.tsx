@@ -23,6 +23,13 @@ export default function CartPage() {
   const [serviceFee, setServiceFee] = useState(3000);
   const [discount, setDiscount] = useState(0);
   const [deliveryDiscount, setDeliveryDiscount] = useState(0);
+
+  const { mutate } = api.customer.createOrderMutation.useMutation({
+    onSuccess: (data) => {
+      router.push(`/customer`);
+    },
+  });
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setPosition(position);
@@ -50,12 +57,15 @@ export default function CartPage() {
     }
   );
 
-  const {data:location } = api.geocoding.reverseGeocode.useQuery({
-    lat: position?.coords.latitude!,
-    lng: position?.coords.longitude!,
-  }, {
-    enabled: !!position
-  });
+  const { data: location } = api.geocoding.reverseGeocode.useQuery(
+    {
+      lat: position?.coords.latitude!,
+      lng: position?.coords.longitude!,
+    },
+    {
+      enabled: !!position,
+    }
+  );
 
   useEffect(() => {
     if (cart) {
@@ -75,18 +85,16 @@ export default function CartPage() {
       setTotalPrice(total);
     }
   }, [cart]);
-  
+
   useEffect(() => {
     if (cart?.promos) {
       const total = cart.promos.reduce((acc, promo) => {
         return acc + promo.amount;
       }, 0);
-      const discount = total * totalPrice / 100 
+      const discount = (total * totalPrice) / 100;
       setDiscount(discount);
     }
   }, [cart, totalPrice]);
-      
-
 
   return (
     <main className=" flex w-full flex-col">
@@ -98,9 +106,9 @@ export default function CartPage() {
         <h1 className=" text-3xl font-medium">{data?.title}</h1>
       </div>
       <div className=" flex flex-row items-center  gap-2 px-6 py-4 ">
-        <FaMapMarkerAlt className="h-7 w-5 fill-main flex-shrink-0" />
+        <FaMapMarkerAlt className="h-7 w-5 flex-shrink-0 fill-main" />
         <div className=" overflow-hidden">
-          <h1 className=" text-lg font-medium truncate">
+          <h1 className=" truncate text-lg font-medium">
             {location?.[0]?.place_name}
           </h1>
         </div>
@@ -133,7 +141,7 @@ export default function CartPage() {
                       </h1>
 
                       <h1 className=" text-sm font-medium">
-                       {formatter.format(item.item.price as unknown as number)}
+                        {formatter.format(item.item.price as unknown as number)}
                       </h1>
                       <AddSubtractItem
                         quantity={item.quantity}
@@ -157,12 +165,17 @@ export default function CartPage() {
         <div className="mx-6 mt-4 flex flex-col gap-2 rounded-xl bg-main px-4 py-2 text-xl font-bold text-white">
           <div className=" inline-flex items-center gap-2 py-2">
             <TbDiscount />
-            <Link href={`/customer/establishment/promo?id=${id}`}>{
-              cart?.promos.length ? `${cart?.promos.length} Promos Used` : 'Promos'
-            }</Link>
+            <Link href={`/customer/establishment/promo?id=${id}`}>
+              {cart?.promos.length
+                ? `${cart?.promos.length} Promos Used`
+                : "Promos"}
+            </Link>
           </div>
           <hr className="h-px border bg-white" />
-          <Link href={`/customer/establishment/cart/payment?id=${id}`} className=" inline-flex items-center gap-2 py-2">
+          <Link
+            href={`/customer/establishment/cart/payment?id=${id}`}
+            className=" inline-flex items-center gap-2 py-2"
+          >
             <FaWallet />
             <div>Payment</div>
           </Link>
@@ -178,35 +191,52 @@ export default function CartPage() {
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Delivery Fee</h1>
           <h1 className=" text-sm font-medium">
-          {formatter.format(deliveryFee)}
+            {formatter.format(deliveryFee)}
           </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Service Fee</h1>
           <h1 className=" text-sm font-medium">
-          {formatter.format(serviceFee)}
+            {formatter.format(serviceFee)}
           </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Discount</h1>
-          <h1 className=" text-sm font-medium">
-          {formatter.format(discount)}
-
-          </h1>
+          <h1 className=" text-sm font-medium">{formatter.format(discount)}</h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Total</h1>
           <h1 className=" text-sm font-medium">
-          {formatter.format(totalPrice + deliveryFee + serviceFee - discount)}
+            {formatter.format(totalPrice + deliveryFee + serviceFee - discount)}
           </h1>
         </div>
-
       </div>
       <div className=" mx-6 my-4">
         {cart?.orderItems.length !== 0 && (
-          <div className=" relative w-full  rounded-full  bg-main  py-2 px-4 text-center text-lg font-bold  text-white">
+          <button
+            onClick={() => {
+              if (
+                cart?.id &&
+                id &&
+                position?.coords?.latitude &&
+                position?.coords?.longitude &&
+                location?.[0]?.place_name
+              ) {
+                mutate({
+                  cartId: cart?.id,
+                  establishmentId: id.toString(),
+                  paymentType: "EWALLET",
+                  lat: position?.coords?.latitude,
+                  lng: position?.coords?.longitude,
+                  address: location?.[0]?.place_name
+                  
+                });
+              }
+            }}
+            className=" relative w-full  rounded-full  bg-main  py-2 px-4 text-center text-lg font-bold  text-white"
+          >
             Place Order
-          </div>
+            </button>
         )}
         {cart?.orderItems.length === 0 && (
           <div className=" relative w-full  rounded-full bg-gray-400  py-2 px-4 text-center text-lg font-bold  text-white">

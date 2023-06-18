@@ -33,4 +33,21 @@ export const transferWalletMutation = protectedProcedure
     });
   });
 
-
+export const topupWalletMutation = protectedProcedure
+  .input(
+    z.object({
+      amount: z.number(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    await ctx.prisma.wallet.update({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      data: {
+        balance: {
+          increment: input.amount,
+        },
+      },
+    });
+  });

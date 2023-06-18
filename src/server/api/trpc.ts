@@ -44,7 +44,8 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     everify,
     geocoder,
     matrix,
-    optimization
+    optimization,
+    directions
   };
 };
 
@@ -76,6 +77,7 @@ import superjson from "superjson";
 import { geocoder } from "../geocoder";
 import { matrix } from "../matrix";
 import { optimization } from "../optimization";
+import { directions } from "../direction";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

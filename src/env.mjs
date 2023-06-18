@@ -27,6 +27,7 @@ const server = z.object({
   SPACES_SECRET: z.string(),
   EVERIFY_KEY: z.string(),  
   SPACES_BUCKET_NAME: z.string(),
+  NEXT_PUBLIC_MAPBOX_TOKEN: z.string(),
 });
 
 /**

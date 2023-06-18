@@ -12,6 +12,8 @@ import {
   merchantProcedure,
   protectedProcedure,
 } from "../trpc";
+import { getCurrentOrders } from "../procedures/merchants/orderStatusQuery";
+import { orderStatusMutation } from "../procedures/merchants/orderStatusMutation";
 
 export const merchantRouter = createTRPCRouter({
   registerBusiness: businessRegisterProcedure,
@@ -19,6 +21,11 @@ export const merchantRouter = createTRPCRouter({
   registerPersonal: personalRegisterProcedure,
 
   getCurrentMerchant: getCurrentMerchantProcedure,
+
+  getCurrentOrders: getCurrentOrders,
+
+  orderStatusMutation: orderStatusMutation,
+
 
   addMenu: merchantProcedure
     .input(
