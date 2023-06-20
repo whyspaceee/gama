@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaArrowLeft, FaMapMarkerAlt } from "react-icons/fa";
 import FocusedScreen from "../../../components/customer/search/FocusedScreen";
 import UnfocusedScreen from "../../../components/customer/search/UnfocusedScreen";
 import Spinner from "../../../components/Spinner";
 import useDebounce from "../../../hooks/useDebounce";
 import { api } from "../../../utils/api";
+import router from "next/router";
 
 
 export default function SearchPage() {
@@ -43,16 +44,19 @@ export default function SearchPage() {
   return (
     
     <main className=" flex min-h-screen flex-col">
-      <div className="h-28 w-full bg-main py-6 px-8 font-semibold">
+      <div className="h-36 w-full bg-main py-6 px-8 font-semibold">
         <div className=" flex h-full flex-col justify-between">
           <div>
+          <FaArrowLeft
+          className="h-8 fill-white"
+          onClick={() => router.push(`/customer`)}/>
             <div className=" flex flex-row items-center gap-2">
               <FaMapMarkerAlt className=" fill-white" />
               <p className=" font-medium text-white">Your location</p>
             </div>
           </div>
           <div>
-            <BsSearch className=" absolute top-16 left-12" />
+            <BsSearch className=" absolute top-24 left-12" />
             <input
               placeholder="Madhang apa hari ini?"
               onFocus={setFocused}
