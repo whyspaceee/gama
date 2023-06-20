@@ -10,6 +10,7 @@ import MerchantMenuList from "../../../components/merchant/menu/MenuList";
 import Spinner from "../../../components/Spinner";
 import { authOptions } from "../../../server/auth";
 import { api } from "../../../utils/api";
+import PreviewMenuList from "../../../components/merchant/menu/PreviewMenuList";
 
 export default function MerchantMenu() {
   const [customerView, setCustomerView] = useState(false);
@@ -64,7 +65,7 @@ export default function MerchantMenu() {
         </button>
       </div>
       {customerView ? (
-        <CustomerMenuList
+        <PreviewMenuList
           popup={popup}
           setPopup={setPopup}
           menu={data?.merchant?.establishments[0]?.menu || []}

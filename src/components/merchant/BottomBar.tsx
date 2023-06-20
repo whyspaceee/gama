@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  BsBasket3,
   BsChat,
   BsHouseDoor,
   BsPerson,
@@ -30,9 +31,10 @@ export default function MerchantBottomBar() {
         </Link>
 
         <div className=" flex w-1/3 flex-row items-center justify-between">
-          <div className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white">
-            <BsChat className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
-          </div>
+        <Link href='/merchant/orders' className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white no_highlights "> 
+              <BsBasket3 className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
+            </Link>
+
           <Link href='/merchant/profile' className=" group flex h-10 w-10  items-center justify-center rounded-full bg-main transition-all active:bg-white no_highlights ">
             <BsPerson className=" h-5 w-5 fill-white transition-all group-active:fill-main" />
           </Link>

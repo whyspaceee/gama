@@ -49,7 +49,7 @@ export default function DriverOrderDetailsPage() {
         <div className=" h-25 flex w-full flex-col justify-between bg-main px-6 py-4 text-white">
           <FaArrowLeft
             className="h-8"
-            onClick={() => router.push(`/customer/establishment?id=${id}`)}
+            onClick={() => router.push(`/customer/orders`)}
           />
           <h1 className=" text-3xl font-medium">Order</h1>
         </div>

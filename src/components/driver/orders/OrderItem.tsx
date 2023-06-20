@@ -56,9 +56,6 @@ export default function OrderItem({
         <div className="flex py-1">
           <IoLocation className="h-8 w-8" />
           <div className="overflow-hidden px-2">
-            <p className=" text-s font-extrabold tracking-wider text-gray-900">
-              FMIPA UGM
-            </p>
             <p className="truncate text-xs font-semibold tracking-wider text-gray-900">
               {deliveryAddress}
             </p>

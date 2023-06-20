@@ -20,6 +20,8 @@ import { FcAdvertising } from "react-icons/fc";
 import { useEffect } from "react";
 import WaitMerchantVerification from "../../components/merchant/register/WaitMerchantVerification";
 import MerchantBottomBar from "../../components/merchant/BottomBar";
+import formatter from "../../utils/formatter";
+import Link from "next/link";
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -54,7 +56,7 @@ export async function getServerSideProps(context: { req: any; res: any }) {
 export default function Merchant() {
   const { data: session } = useSession();
 
-
+  const {data: balance} = api.wallet.getWallet.useQuery()
   const { data, isLoading } = api.merchant.getCurrentMerchant.useQuery();
 
   if (isLoading) {
@@ -80,19 +82,17 @@ export default function Merchant() {
           <h1 className=" text-4xl font-bold">Gas! Madhang</h1>
           <h2 className=" text-base font-bold">{data.merchant.establishments?.at(0)?.title}</h2>
         </div>
-        <div className=" h-32 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
+        <Link href={'/wallet'} className=" h-32 w-full rounded-lg bg-main bg-gradient-to-r p-4 font-semibold text-white shadow-xl transition-all active:-translate-y-2 ">
           <div className=" flex flex-row items-center gap-x-4">
             <BsWallet2 className=" h-9 w-9 " />
             <div>
               <h1>Balance</h1>
               <p className="-mt-1 overflow-hidden text-clip text-lg font-bold ">
-                Rp 100.000.000
+                {formatter.format(balance?.balance || 0)}
               </p>
             </div>
           </div>
-          <h1 className=" w-full text-right">Today's revenue</h1>
-          <p className=" w-full text-right">Rp 100.000</p>
-        </div>
+        </Link>
         <div className=" w-full">
           <p className="mb-4 w-full text-center text-lg font-medium">
             Customize your store

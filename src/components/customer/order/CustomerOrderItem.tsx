@@ -51,7 +51,7 @@ export default function CustomerOrderItem({
           <IoLocation className="h-8 w-8" />
           <div className="overflow-hidden px-2">
             <p className=" text-s font-extrabold tracking-wider text-gray-900">
-              FMIPA UGM
+              {customer}
             </p>
             <p className="truncate text-xs font-semibold tracking-wider text-gray-900">
               {deliveryAddress}
