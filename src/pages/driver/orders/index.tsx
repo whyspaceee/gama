@@ -33,6 +33,7 @@ export default function OrdersPage() {
               price={order.totalPrice}
               status={order.status}
               customer={order.customer.name}
+              earning={order.earning}
             />
           ))}
       </div>

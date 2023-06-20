@@ -1,5 +1,6 @@
 import { acceptOrderMutation } from "../procedures/drivers/acceptOrderMutation";
 import { driverRegisterProcedure } from "../procedures/drivers/driverRegisterProcedure";
+import { finishOrderMutation } from "../procedures/drivers/finishOrderMutation";
 import { getCurrentDriverProcedure } from "../procedures/drivers/getCurrentDriverProcedure";
 import { driverOrderDetailsQuery } from "../procedures/drivers/orderDetailsQuery";
 import { driverOrderStatusQuery } from "../procedures/drivers/orderStatusQuery";
@@ -14,5 +15,7 @@ export const driverRouter = createTRPCRouter({
 
   detailsQuery: driverOrderDetailsQuery,
 
-  acceptOrder: acceptOrderMutation
+  acceptOrder: acceptOrderMutation,
+  
+  finishOrder: finishOrderMutation
 });

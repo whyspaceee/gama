@@ -212,6 +212,7 @@ model Order {
     startTime       DateTime      @default(now())
     endTime         DateTime?
     orderPrice      Decimal
+    earning         Int           @db.UnsignedInt
     cart            Cart?          @relation(fields: [cartId], references: [id])   
     customer        Customer      @relation(fields: [customerId], references: [id])
     driver          Driver?       @relation(fields: [driverId], references: [id])

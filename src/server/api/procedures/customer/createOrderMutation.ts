@@ -19,6 +19,48 @@ export const createOrderProcedure = protectedProcedure
       throw new TRPCError({ message: "User not found", code: "NOT_FOUND" });
     }
 
+    const establishmentLatLng = await ctx.prisma.establishment.findUnique({
+      where: {
+        id: input.establishmentId,
+      },
+      select: {
+        address: true,
+      },
+    });
+
+    if (!establishmentLatLng) {
+      throw new TRPCError({
+        message: "Establishment not found",
+        code: "NOT_FOUND",
+      });
+    }
+
+    const directions = await ctx.directions
+      .getDirections({
+        profile: "driving",
+        geometries: "geojson",
+        waypoints: [
+          {
+            coordinates: [
+              establishmentLatLng.address?.longitude!,
+              establishmentLatLng.address?.latitude!,
+            ],
+          },
+          {
+            coordinates: [input.lng, input.lat],
+          },
+        ],
+      })
+      .send();
+
+    const distance = directions.body.routes[0]?.distance;
+
+    if (!distance) {
+      throw new TRPCError({ message: "Distance not found", code: "NOT_FOUND" });
+    }
+
+    const fare = Math.ceil(2000 + distance * 2);
+
     const order = await ctx.prisma.order.create({
       data: {
         deliveryAddress: input.address,
@@ -29,6 +71,7 @@ export const createOrderProcedure = protectedProcedure
             id: input.establishmentId,
           },
         },
+        earning: fare,
         paymentType: input.paymentType,
         orderPrice: 0,
         cart: {
@@ -36,37 +79,32 @@ export const createOrderProcedure = protectedProcedure
             id: input.cartId,
           },
         },
-
         customer: {
           connect: {
             id: ctx.session.user.customerId.toString(),
           },
         },
       },
-    });
-
-    const cart = await ctx.prisma.cart.findUnique({
-      where: {
-        id: input.cartId,
-      },
-      select: {
-        promos: {
-          select: {
-            amount: true,
-          },
-        },
-        orderItems: {
-          select: {
-            quantity: true,
-            item: {
-              select: {
-                price: true,
+      include: {
+        cart: {
+          include: {
+            orderItems: {
+              include: {
+                item: true,
               },
             },
+            promos: true,
+          },
+        },
+        establishment: {
+          include: {
+            address: true,
           },
         },
       },
     });
+
+    const cart = order.cart;
 
     if (!cart)
       throw new TRPCError({ message: "Cart not found", code: "NOT_FOUND" });
@@ -75,16 +113,27 @@ export const createOrderProcedure = protectedProcedure
       return acc + item.quantity * (item.item.price as unknown as number);
     }, 0);
 
-    const afterDiscount = cart.promos[0]
+    const afterDiscount = (cart.promos[0]
       ? price - price * (cart.promos[0].amount as unknown as number)
-      : price;
+      : price)
 
     const updatedOrder = await ctx.prisma.order.update({
       where: {
         id: order.id,
       },
       data: {
-        orderPrice: afterDiscount,
+        orderPrice: afterDiscount + order.earning,
+      },
+    });
+
+    await ctx.prisma.wallet.update({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      data: {
+        balance: {
+          decrement: afterDiscount + order.earning,
+        },
       },
     });
 

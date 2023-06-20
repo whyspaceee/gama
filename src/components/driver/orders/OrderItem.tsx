@@ -12,14 +12,16 @@ export default function OrderItem({
   deliveryAddress,
   price,
   status,
-  customer
+  customer,
+  earning
 }: {
   id: string;
   placeName: string;
   deliveryAddress: string;
   price: number | undefined;
   status: Status;
-  customer:string
+  customer:string;
+  earning: number
 }) {
 
   const utils = api.useContext();
@@ -72,7 +74,7 @@ export default function OrderItem({
             Earnings
           </p>
           <p className="text-s text-right font-bold tracking-wider text-gray-900">
-            Rp 8.000
+            {formatter.format(earning)}
           </p>
         </div>
         <div className="flex justify-between pt-4">

@@ -39,6 +39,12 @@ export default function DriverOrderDetailsPage() {
     },
   });
 
+  const {mutate: finishOrder} = api.driver.finishOrder.useMutation({
+    onSettled: () => {
+      utils.driver.detailsQuery.invalidate();
+    }
+  })
+
   const ref = useRef<MapRef>(null);
 
   if (isLoading) return <Spinner />;
@@ -136,14 +142,22 @@ export default function DriverOrderDetailsPage() {
                 acceptOrder({
                   orderId: data.currentOrder?.id,
                 });
+                return
               }
-              mutate({
-                status:
-                  data.currentOrder?.status === "DRIVER_FOUND"
-                    ? "DRIVER_PICKEDUP"
-                    : "FINISHED",
-                orderId: data.currentOrder?.id!,
-              });
+
+              if (data.currentOrder?.status === "DRIVER_PICKEDUP") {
+                finishOrder({
+                  orderId: data.currentOrder?.id,
+                });
+              }
+
+              if(data.currentOrder?.status === "DRIVER_FOUND") {
+                mutate({
+                  status:"DRIVER_PICKEDUP",
+                  orderId: data.currentOrder?.id!,
+                });
+              }
+
             }}
             isMutating={isMutating}
           />

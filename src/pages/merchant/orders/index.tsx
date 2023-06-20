@@ -6,12 +6,13 @@ import PendingOrderItem from "../../../components/merchant/orders/PendingOrderIt
 import { api } from "../../../utils/api";
 import MerchantOrderItem from "../../../components/merchant/orders/PendingOrderItem";
 import Spinner from "../../../components/Spinner";
+import MerchantBottomBar from "../../../components/merchant/BottomBar";
 
 export default function OrderPage() {
   const { data, isLoading } = api.merchant.getCurrentOrders.useQuery();
 
   return (
-    <main className=" flex min-h-screen flex-col">
+    <main className=" flex min-h-screen flex-col pb-32">
       <div className="w-full bg-main" style={{ height: 75 }}>
         <p className="px-12 py-5 text-3xl font-semibold tracking-widest text-gray-50">
           Orders
@@ -32,6 +33,7 @@ export default function OrderPage() {
             />
           ))}
       </div>
+      <MerchantBottomBar />
     </main>
   );
 }

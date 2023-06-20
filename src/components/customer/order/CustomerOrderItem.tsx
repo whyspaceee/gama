@@ -64,29 +64,8 @@ export default function CustomerOrderItem({
             {formatter.format(price || 0)}
           </p>
         </div>
-        <div className="flex justify-between pt-4">
-          <p className="text-s font-bold tracking-wider text-gray-900">
-            Earnings
-          </p>
-          <p className="text-s text-right font-bold tracking-wider text-gray-900">
-            Rp 8.000
-          </p>
-        </div>
-        <div className="flex justify-between pt-4">
-          <p className="text-s font-bold tracking-wider text-gray-900">Fees</p>
-          <p className="text-s text-right font-bold tracking-wider text-gray-900">
-            Rp 0
-          </p>
-        </div>
-        <div>
-          <div className="flex justify-start pt-9">
-            <BsCashStack className="h-10 w-6" />
-            <p className="text-s h-3 w-56 px-4 pt-2 tracking-wider text-gray-500 text-opacity-70">
-              Payment with Gas! Pay
-            </p>
-          </div>
-        </div>
-              <div className="flex justify-evenly">
+        
+              <div className="flex justify-start mt-2 ">
                 <p className="text-s py-1 text-start font-bold tracking-wider text-green-600">
                   {
                     formatStatus(status)
