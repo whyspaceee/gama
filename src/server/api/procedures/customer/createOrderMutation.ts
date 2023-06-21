@@ -112,7 +112,7 @@ export const createOrderProcedure = protectedProcedure
     }, 0);
 
     const afterDiscount = order.cart.promos[0]
-      ? price - price * (order.cart.promos[0].amount as unknown as number)
+      ? price - (price * (order.cart.promos[0].amount as unknown as number) / 100)
       : price;
 
     const updatedOrder = await ctx.prisma.order.update({

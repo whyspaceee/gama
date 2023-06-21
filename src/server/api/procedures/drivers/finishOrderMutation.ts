@@ -49,7 +49,7 @@ export const finishOrderMutation = protectedProcedure
     }, 0);
 
     const afterDiscount = order.cart.promos[0]
-      ? price - price * (order.cart.promos[0].amount as unknown as number)
+      ? price - (price * (order.cart.promos[0].amount as unknown as number) /100 )
       : price;
 
     if (!order.establishment.merchant[0]?.user?.id) {
