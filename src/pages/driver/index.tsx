@@ -117,8 +117,6 @@ export default function Driver() {
               </AnimatePresence>
             </div>
           </div>
-          <h1 className=" w-full text-right">Today's revenue</h1>
-          <p className=" w-full text-right">Rp 100.000</p>
         </div>
         <div className=" mb-8 w-full rounded-xl ">
           <div className=" overflow-hidden rounded-xl">
@@ -135,8 +133,6 @@ export default function Driver() {
                 width: "100%",
                 height: "192px",
               }}
-              longitude={position && position.coords.longitude}
-              latitude={position && position.coords.latitude}
               mapStyle="mapbox://styles/mapbox/streets-v12"
             />
           </div>

@@ -13,6 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IoTrashBin } from "react-icons/io5";
+import { UploadButton } from "../../../../utils/uploadcomponents";
 
 export default function EditMenu() {
   const router = useRouter();
@@ -31,28 +32,27 @@ export default function EditMenu() {
   });
   const editMenu = api.merchant.editMenu.useMutation({
     onSuccess: () => {
-      router.push('/merchant/menu')
-    }})
+      router.push("/merchant/menu");
+    },
+  });
 
   useEffect(() => {
-    if(!menuItem) return
+    if (!menuItem) return;
     reset({
       title: menuItem?.title,
       description: menuItem?.description,
       price: menuItem?.price,
+      thumbnail: menuItem?.thumbnail,
       stock: menuItem?.stock,
       category: { value: menuItem?.category, label: menuItem?.category.title },
-
-    })
-  }, [menuItem])
-
-
+    });
+  }, [menuItem]);
 
   const validationSchema = z.object({
-    title: z.string().min(1, {message: 'Required'}).max(50),
-    description: z.string().min(1, {message: 'Required'}).max(100),
-    price: z.number().min(1, {message: 'Required'}).max(10000000),
-    stock: z.number().min(1, {message: 'Required'}).max(100000),
+    title: z.string().min(1, { message: "Required" }).max(50),
+    description: z.string().min(1, { message: "Required" }).max(100),
+    price: z.number().min(1, { message: "Required" }).max(10000000),
+    stock: z.number().min(1, { message: "Required" }).max(100000),
     category: z.object({
       value: z.object({
         id: z.string(),
@@ -61,19 +61,21 @@ export default function EditMenu() {
       }),
       label: z.string(),
     }),
+    thumbnail: z.string(),
   });
 
-  const onSubmit = (data:any) => {
-    console.log(data)
-    if(menuItem){
-    editMenu.mutate({
-      id: menuItem.id,
-      title: data.title,
-      description: data.description,
-      price: data.price,
-      stock: data.stock,
-      categoryId: data.category.value.id,
-    })
+  const onSubmit = (data: any) => {
+    console.log(data);
+    if (menuItem) {
+      editMenu.mutate({
+        id: menuItem.id,
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        stock: data.stock,
+        categoryId: data.category.value.id,
+        thumbnail: data.thumbnail,
+      });
     }
   };
 
@@ -83,8 +85,9 @@ export default function EditMenu() {
     control,
     handleSubmit,
     setValue,
-    reset
-  } = useForm({resolver: zodResolver(validationSchema)});
+    watch,
+    reset,
+  } = useForm({ resolver: zodResolver(validationSchema) });
 
   if (isLoading) {
     return (
@@ -95,29 +98,44 @@ export default function EditMenu() {
   }
   if (error) return <div>{error.message}</div>;
 
-  if (menuItem){
+  if (menuItem) {
     return (
       <main className="mb-8 flex min-h-screen flex-col">
         <div className=" inline-flex h-16 w-full items-center justify-between bg-main p-4 text-white">
           <IoMdArrowRoundBack
-            onClick={() => router.push('/merchant/menu')}
+            onClick={() => router.push("/merchant/menu")}
             className=" h-5 w-5 "
           />
           <h1 className="overflow-hidden truncate text-lg font-bold">
             Edit {menuItem.title}
           </h1>
           <IoTrashBin
-            onClick={() => router.push('/merchant/menu')}
+            onClick={() => router.push("/merchant/menu")}
             className=" h-5 w-5 "
           />
         </div>
         <div className=" flex flex-col gap-1 p-4  shadow-xl">
-          <Image
-            src={menuItem.thumbnail}
-            alt={"thumbnail"}
-            width={100}
-            height={100}
-            className=" aspect-square rounded-xl object-cover"
+          <div>
+            {watch("thumbnail") && (
+              <Image
+                src={watch("thumbnail")}
+                width={200}
+                height={200}
+                alt="thumbnail"
+              />
+            ) }
+          </div>
+          <UploadButton
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              // Do something with the response
+              if(!res) return;
+              setValue("thumbnail", res[0]?.fileUrl);
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              alert(`ERROR! ${error.message}`);
+            }}
           />
           <p className=" text-sm font-bold text-sky-500">Change photo</p>
           <p className=" text-sm font-bold">
@@ -190,17 +208,17 @@ export default function EditMenu() {
               </div>
             )}
           />
-
         </form>
         <button
-            form="add-item"
-            className=" mx-4 mt-8  h-14  rounded-xl bg-main text-lg font-bold text-white"
-            type="submit"
-          >
-            Edit Item
-          </button>
+          form="add-item"
+          className=" mx-4 mt-8  h-14  rounded-xl bg-main text-lg font-bold text-white"
+          type="submit"
+        >
+          Edit Item
+        </button>
       </main>
-    );}
+    );
+  }
 }
 
 export async function getServerSideProps(context: { req: any; res: any }) {

@@ -13,6 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BsImage, BsPerson } from "react-icons/bs";
+import { UploadButton } from "../../../../utils/uploadcomponents";
 
 export default function AddMenu() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function AddMenu() {
       router.push("/merchant/menu");
     },
   });
-  
+
   const validationSchema = z.object({
     title: z.string().min(1, { message: "Required" }).max(50),
     description: z.string().min(1, { message: "Required" }).max(100),
@@ -45,11 +46,11 @@ export default function AddMenu() {
       }),
       label: z.string(),
     }),
+    thumbnail: z.string(),
   });
 
   const onSubmit = (formData: any) => {
-
-    (formData);
+    if(addMenu.isLoading) return;
     if (data?.merchant?.establishments?.[0]?.id)
       addMenu.mutate({
         title: formData.title,
@@ -58,24 +59,9 @@ export default function AddMenu() {
         stock: formData.stock,
         categoryId: formData.category.value.id,
         establishmentId: data?.merchant?.establishments?.[0]?.id,
-        thumbnail: "https://source.unsplash.com/random/?food",
+        thumbnail: formData.thumbnail,
       });
   };
-
-  const uploadToPresignedUrl = async (file: File, presignedUrl: URL) => {
-    const response = await fetch(presignedUrl, {
-        method: "PUT",
-        headers: {
-            "Content-Type": file.type,
-        },
-        body: file,
-    });
-    if (response.ok) {
-        return response;
-    }
-    
-    return null;
-    };
 
   const {
     register,
@@ -88,7 +74,6 @@ export default function AddMenu() {
   } = useForm({ resolver: zodResolver(validationSchema) });
 
   const [test, setTest] = useState<File | undefined>();
-
 
   if (isLoading) {
     return (
@@ -109,25 +94,33 @@ export default function AddMenu() {
         <h1 className="overflow-hidden truncate text-lg font-bold">Add Item</h1>
       </div>
       <div className=" flex flex-col gap-1 p-4  shadow-xl">
-        {/* {watch("tempImage") ? (
-          <Image
-            src={''}
-            alt="thumbnail"
-            width={100}
-            height={100}
-            className=" aspect-square rounded-xl object-cover"
-          />
-        ) : ( */}
-          <BsImage className=" h-[100px] w-[100px] p-4 rounded-xl bg-gray-200 fill-gray-500" />
-        
+        <div>
+          {watch("thumbnail") ? (
+            <Image
+              src={watch("thumbnail")}
+              alt="thumbnail"
+              width={100}
+              height={100}
+              className=" aspect-square rounded-xl object-cover"
+            />
+          ) : (
+            <BsImage className=" h-[100px] w-[100px] rounded-xl bg-gray-200 fill-gray-500 p-4" />
+          )}
+        </div>
 
-        <input
-          form="add-item"
-          {...register("tempImage")}
-          type="file"
-          accept="image/*"
-          className=" "
+        <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            // Do something with the response
+            if(!res) return
+            setValue("thumbnail", res[0]?.fileUrl);
+          }}
+          onUploadError={(error: Error) => {
+            // Do something with the error.
+            alert(`ERROR! ${error.message}`);
+          }}
         />
+
         <p className=" text-sm font-bold">
           Items with high quality photos tend to be more appealing to customers.
           Max 2MB.
@@ -212,7 +205,7 @@ export default function AddMenu() {
 export async function getServerSideProps(context: { req: any; res: any }) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  (session?.user);
+  session?.user;
 
   if (!session) {
     return {

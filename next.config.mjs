@@ -9,6 +9,9 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  experimental: {
+    esmExternals: false, // THIS IS THE FLAG THAT MATTERS
+  },
 
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
@@ -44,6 +47,12 @@ const config = {
       {
         protocol: 'https',
         hostname: 'source.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'uploadthing.com',
         port: '',
         pathname: '/**',
       },

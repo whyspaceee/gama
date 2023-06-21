@@ -8,7 +8,7 @@ export default function TopupScreen() {
   const router = useRouter()
   const { mutate } = api.wallet.topUp.useMutation({
     onSuccess: (data) => {
-        router.push(`/wallet`)
+        router.back()
     }
   })
 

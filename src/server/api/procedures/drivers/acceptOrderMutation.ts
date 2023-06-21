@@ -9,6 +9,7 @@ export const acceptOrderMutation = protectedProcedure.input(
         if (!ctx.session.user.driverId) {
             throw new TRPCError({ message: "User not found", code: "NOT_FOUND" });
         }
+
         return ctx.prisma.order.update({
             where: {
                 id: input.orderId,
