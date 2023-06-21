@@ -8,6 +8,7 @@ import { getPromosFromEstablishment, updateCartPromos } from "../procedures/cust
 import { createOrderProcedure } from "../procedures/customer/createOrderMutation";
 import { customerOrderStatusQuery } from "../procedures/customer/orderStatusQuery";
 import { customerOrderDetailsQuery } from "../procedures/customer/customerOrderDetailsQuery";
+import { orderFeeQuery } from "../procedures/customer/orderFeeQuery";
 
 export const customerRouter = createTRPCRouter({
     customerRegister : customerRegisterProcedure,
@@ -20,5 +21,6 @@ export const customerRouter = createTRPCRouter({
     updateCartPromos: updateCartPromos,
     createOrderMutation: createOrderProcedure,
     orderStatusQuery: customerOrderStatusQuery,
-    orderDetailsQuery: customerOrderDetailsQuery
+    orderDetailsQuery: customerOrderDetailsQuery,
+    orderFee: orderFeeQuery
 })

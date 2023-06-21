@@ -13,11 +13,13 @@ export default function OrderItem({
   price,
   status,
   customer,
-  earning
+  earning,
+  establishmentName
 }: {
   id: string;
   placeName: string;
   deliveryAddress: string;
+  establishmentName: string;
   price: number | undefined;
   status: Status;
   customer:string;
@@ -47,7 +49,7 @@ export default function OrderItem({
           <IoLocationOutline className="h-8 w-8" />
           <div className="item-center flex flex-col overflow-hidden px-2">
             <p className=" text-s font-extrabold tracking-wider text-gray-900">
-              Nasi Goreng Jalvaro
+              {establishmentName}
             </p>
             <p className="truncate text-xs font-semibold tracking-wider text-gray-900">
               {placeName}

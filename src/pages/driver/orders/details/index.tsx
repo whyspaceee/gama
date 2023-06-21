@@ -11,6 +11,10 @@ import { IoMail } from "react-icons/io5";
 import formatStatus from "../../../../utils/formatStatus";
 import formatter from "../../../../utils/formatter";
 import { Status } from "@prisma/client";
+import Image from "next/image";
+import establishmentPin from "public/establishmentPin.svg";
+import customerPin from "public/customerPin.svg";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 export default function DriverOrderDetailsPage() {
   const router = useRouter();
@@ -91,6 +95,18 @@ export default function DriverOrderDetailsPage() {
               }}
             />
           </Source>
+          <Marker
+            longitude={data.currentOrder?.establishment.address?.longitude}
+            latitude={data.currentOrder?.establishment.address?.latitude}
+          >
+            <Image height={32} width={32} src={establishmentPin} alt='marker'/>
+          </Marker>
+          <Marker
+            longitude={data.currentOrder?.deliveryLng}
+            latitude={data.currentOrder?.deliveryLat}
+          >
+            <Image height={32} width={32} src={customerPin} alt='marker'/>
+          </Marker>
         </Map>
         <div className=" relative bottom-0 flex flex-1 flex-col gap-4 overflow-hidden rounded-t-lg bg-white px-6 py-4">
           <div className=" inline-flex gap-1 text-lg font-bold">

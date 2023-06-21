@@ -15,6 +15,9 @@ import formatStatus from "../../../../utils/formatStatus";
 import { IoMail } from "react-icons/io5";
 import formatter from "../../../../utils/formatter";
 import "mapbox-gl/dist/mapbox-gl.css";
+import Image from "next/image";
+import establishmentPin from "public/establishmentPin.svg";
+import customerPin from "public/customerPin.svg";
 
 export default function CustomerOrderDetailsPage() {
   const router = useRouter();
@@ -68,11 +71,23 @@ export default function CustomerOrderDetailsPage() {
                 "line-cap": "round",
               }}
               paint={{
-                "line-color": "rgba(3, 170, 238, 0.5)",
+                "line-color": "#E01F3D",
                 "line-width": 5,
               }}
             />
           </Source>
+          <Marker
+            longitude={data.currentOrder?.establishment.address?.longitude}
+            latitude={data.currentOrder?.establishment.address?.latitude}
+          >
+            <Image height={32} width={32} src={establishmentPin} alt='marker'/>
+          </Marker>
+          <Marker
+            longitude={data.currentOrder?.deliveryLng}
+            latitude={data.currentOrder?.deliveryLat}
+          >
+            <Image height={32} width={32} src={customerPin} alt='marker'/>
+          </Marker>
         </Map>
         <div className=" relative bottom-0 flex flex-1 flex-col gap-4 overflow-hidden rounded-t-lg bg-white px-6 py-4">
           <div className=" inline-flex text-lg font-bold">

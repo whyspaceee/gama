@@ -47,10 +47,10 @@ export default function WalletPage() {
         </div>
       </div>
       <div className="my-4 inline-flex gap-4 px-6">
-        <button className=" inline-flex items-center gap-2 rounded-lg bg-white py-2 px-4 shadow-md">
+        <Link href={'/wallet/topup'} className=" inline-flex items-center gap-2 rounded-lg bg-white py-2 px-4 shadow-md">
           <FaCreditCard className=" text-main" />
           <p>Top up</p>
-        </button>
+        </Link>
         <Link href='/wallet/transfer' className=" inline-flex items-center gap-2 rounded-lg bg-white py-2 px-4 shadow-md">
           <FaCreditCard className=" text-main" />
           <p>Transfer</p>

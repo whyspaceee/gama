@@ -13,6 +13,7 @@ export default function CustomerOrderItem({
   price,
   status,
   customer,
+  establishmentName
 }: {
   id: string;
   placeName: string;
@@ -20,6 +21,7 @@ export default function CustomerOrderItem({
   price: number | undefined;
   status: Status;
   customer: string;
+  establishmentName: string;
 }) {
   const utils = api.useContext();
   const { mutate } = api.merchant.orderStatusMutation.useMutation({
@@ -39,7 +41,7 @@ export default function CustomerOrderItem({
           <IoLocationOutline className="h-8 w-8" />
           <div className="item-center flex flex-col overflow-hidden px-2">
             <p className=" text-s font-extrabold tracking-wider text-gray-900">
-              Nasi Goreng Jalvaro
+              {establishmentName}
             </p>
             <p className="truncate text-xs font-semibold tracking-wider text-gray-900">
               {placeName}

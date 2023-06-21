@@ -20,7 +20,7 @@ export default function CartPage() {
   const [position, setPosition] = useState<GeolocationPosition>();
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryFee, setDeliveryFee] = useState(4000);
-  const [serviceFee, setServiceFee] = useState(3000);
+  const [serviceFee, setServiceFee] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [deliveryDiscount, setDeliveryDiscount] = useState(0);
 
@@ -66,6 +66,16 @@ export default function CartPage() {
       enabled: !!position,
     }
   );
+
+  const {data: fee} = api.customer.orderFee.useQuery({
+    establishmentId: id?.toString()!,
+    lat: position?.coords.latitude!,
+    lng: position?.coords.longitude!
+  }, {
+    enabled: !!location && !!id
+  })
+
+
 
   useEffect(() => {
     if (cart) {
@@ -191,7 +201,7 @@ export default function CartPage() {
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Delivery Fee</h1>
           <h1 className=" text-sm font-medium">
-            {formatter.format(deliveryFee)}
+            {formatter.format(fee || 0)}
           </h1>
         </div>
         <div className=" flex flex-row items-center justify-between">
@@ -207,7 +217,7 @@ export default function CartPage() {
         <div className=" flex flex-row items-center justify-between">
           <h1 className=" text-sm font-medium">Total</h1>
           <h1 className=" text-sm font-medium">
-            {formatter.format(totalPrice + deliveryFee + serviceFee - discount)}
+            {formatter.format(totalPrice + (fee || 0) + serviceFee - discount)}
           </h1>
         </div>
       </div>

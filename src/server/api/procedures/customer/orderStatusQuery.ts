@@ -31,19 +31,5 @@ export const customerOrderStatusQuery = protectedProcedure.query(async ({ ctx })
     }
   });
 
-  const dataWithPrice = data.map((order) => {
-    if(!order.cart) throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Order has no cart"
-    });
-    const totalPrice = order.cart.orderItems.reduce((acc, curr) => {
-        return acc + (curr.item.price as unknown as number * curr.quantity);
-    }, 0);
-    return {
-        ...order,
-        totalPrice
-    }
-  })
-  
-  return dataWithPrice
+  return data;
   });

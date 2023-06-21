@@ -28,6 +28,7 @@ export default function OrdersPage() {
             <OrderItem
               key={order.id}
               id={order.id}
+              establishmentName={order.establishment.title}
               placeName={order.establishment.address?.place_name!}
               deliveryAddress={order.deliveryAddress}
               price={order.totalPrice}

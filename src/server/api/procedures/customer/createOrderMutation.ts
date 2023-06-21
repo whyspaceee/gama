@@ -104,18 +104,16 @@ export const createOrderProcedure = protectedProcedure
       },
     });
 
-    const cart = order.cart;
-
-    if (!cart)
+    if (!order.cart)
       throw new TRPCError({ message: "Cart not found", code: "NOT_FOUND" });
 
-    const price = cart.orderItems.reduce((acc, item) => {
+    const price = order.cart.orderItems.reduce((acc, item) => {
       return acc + item.quantity * (item.item.price as unknown as number);
     }, 0);
 
-    const afterDiscount = (cart.promos[0]
-      ? price - price * (cart.promos[0].amount as unknown as number)
-      : price)
+    const afterDiscount = order.cart.promos[0]
+      ? price - price * (order.cart.promos[0].amount as unknown as number)
+      : price;
 
     const updatedOrder = await ctx.prisma.order.update({
       where: {

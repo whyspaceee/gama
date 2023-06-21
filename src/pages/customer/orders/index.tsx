@@ -26,7 +26,8 @@ export default function CustomerOrdersPage(){
                 id={order.id}
                 placeName={order.establishment.address?.place_name!}
                 deliveryAddress={order.deliveryAddress}
-                price={order.totalPrice}
+                establishmentName={order.establishment.title}
+                price={order.orderPrice as unknown as number}
                 status={order.status}
                 customer={order.customer.name}
               />

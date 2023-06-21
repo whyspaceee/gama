@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { prisma } from "../../../db";
 import { protectedProcedure } from "../../trpc";
+import { TRPCError } from "@trpc/server";
 
 export const getPromosFromEstablishment = protectedProcedure
   .input(
@@ -16,7 +17,7 @@ export const getPromosFromEstablishment = protectedProcedure
     });
   });
 
-  export const updateCartPromos = protectedProcedure
+export const updateCartPromos = protectedProcedure
   .input(
     z.object({
       cartId: z.string(),
@@ -32,6 +33,12 @@ export const getPromosFromEstablishment = protectedProcedure
         promos: {
           select: {
             id: true,
+            minOrder: true
+          },
+        },
+        orderItems: {
+          include: {
+            item: true,
           },
         },
       },
@@ -40,6 +47,28 @@ export const getPromosFromEstablishment = protectedProcedure
     if (!cart) {
       throw new Error(`Cart with ID ${input.cartId} not found`);
     }
+
+    const cartPrice = cart.orderItems.reduce((acc, item) => {
+      return acc + item.quantity * (item.item.price as unknown as number);
+    }, 0);
+
+    const promos = await ctx.prisma.promo.findMany({
+      where: {
+        id: {
+          in: input.promoIds,
+        },
+      },
+    })
+
+    promos.forEach((promo) => {
+      if (cartPrice < promo.minOrder) {
+        throw new TRPCError({
+          message: "Cart price is not satisfied",
+          code: "NOT_FOUND",
+        });
+      }
+    })
+   
 
     const existingPromoIds = cart.promos.map((promo) => promo.id);
     const promoIdsToAdd = input.promoIds.filter(
@@ -81,4 +110,3 @@ export const getPromosFromEstablishment = protectedProcedure
       success: true,
     };
   });
-
